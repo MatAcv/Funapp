@@ -43,6 +43,18 @@ flutter:
   uses-material-design: true
   assets:
     - lib/src/assets/bg0.jpeg
+    - lib/src/assets/bg1.jpeg
+    - lib/src/assets/bg2.jpeg
+    - lib/src/assets/bg3.jpeg
+    - lib/src/assets/bg4.jpeg
+    - lib/src/assets/bg5.jpeg
+    - lib/src/assets/bg6.jpeg
+    - lib/src/assets/bg7.jpeg
+    - lib/src/assets/bg8.jpeg
+    - lib/src/assets/bg9.jpeg
+    - lib/src/assets/bg10.jpeg
+    
+    
     
 
 

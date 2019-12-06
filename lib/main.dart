@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:funapp/src/pages/denuncia_detalle.dart';
 import 'package:funapp/src/pages/home_page.dart';
 
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute : '/',
       routes: {
         '/' : (BuildContext context) => HomePage(),
+        'detalleDenuncia' : (BuildContext context) =>DetalleDenuncia(),
  
       },
     );

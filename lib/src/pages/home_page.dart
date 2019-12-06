@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:funapp/src/models/denuncias_model.dart';
+import 'package:funapp/src/providers/denuncias_provider.dart';
 import 'package:funapp/src/widgets/card_swiper.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -16,13 +18,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
      List<dynamic> lista = new List();
+     final denunciasProvider = new DenunciasProvider();
+     final denuncia = new Denuncia();
+     List<Denuncia> ls = new List();
   
   @override
   Widget build(BuildContext context) {
 
     
-
-
+     final Denuncia denuncia = ModalRoute.of(context).settings.arguments; 
+    
+    
+    
     return Scaffold(
        appBar: AppBar(
         centerTitle: false,
@@ -43,16 +50,14 @@ class _HomePageState extends State<HomePage> {
            children: <Widget>[
              _swiperTarjetas(),
              RaisedButton(
-               child: Text("hola"),
+               child: Text("denuncia.titulo"),
                onPressed: (){
                  login();
                },
              ),
              RaisedButton(
                child: Text("chao"),
-               onPressed: (){
-                
-               },
+              
              )
          
            ],
@@ -66,8 +71,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _swiperTarjetas(){
+     // return CardSwiper();
 
-      return CardSwiper();
+     return FutureBuilder(
+      future: denunciasProvider.getTitulo(),
+      builder: (BuildContext context, AsyncSnapshot <List>snapshot) {
+
+        if (snapshot.hasData)
+        {
+      return CardSwiper(denuncias: snapshot.data);
+
+        } else{
+
+          return Container(
+            height: 400.0,
+            child: Center (
+              child : CircularProgressIndicator()));
+        }
+        
+      }
+    );
+     
  
   }
 
@@ -85,7 +109,7 @@ class _HomePageState extends State<HomePage> {
     if(datauser.length == 0){
       print('incorrecto');
     }else{
-      print(datauser);
+      print('correcto');
     }
  }
 
