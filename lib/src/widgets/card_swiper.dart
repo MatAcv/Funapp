@@ -42,7 +42,7 @@ class CardSwiper extends StatelessWidget {
                           child: Text('${titles[index]}',style: TextStyle(fontSize: 30 ),),),
                           Container(
                             padding: EdgeInsets.only(left: 20.0,top: 200.0),    
-                            child: Text("$lista"),
+                            child: Text("$lista "),
                           )
                         ],
                     ),
