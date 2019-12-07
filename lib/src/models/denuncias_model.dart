@@ -85,4 +85,10 @@ getViews(){
   return views;
 }
 
+getDescripcion(){
+
+
+  return descripcion;
+}
+
 }
