@@ -1,6 +1,6 @@
 class Us{
    
-List<Usuario> item = new List();
+static List<Usuario> item = new List();
 
 Us.fromJsonList( List<dynamic> jsonList){
 
@@ -26,6 +26,17 @@ static String parseJson(dynamic response) {
     return products[0].nick;
 }
 
+static String parseJsonId(dynamic response) {
+    List<Usuario> products = new List<Usuario>();
+    List jsonParsed = response.toList();
+    for (int i = 0; i < jsonParsed.length; i++) {
+      products.add(new Usuario.fromJsonMap(jsonParsed[i]));
+    }
+    
+    print(products[0].idUser);
+    return products[0].idUser;
+}
+
 
 static List<Usuario> parseJson2(dynamic response) {
     List<Usuario> products = new List<Usuario>();
@@ -47,6 +58,26 @@ static String parseJson3(dynamic response) {
     return products[0].pass;
 }
 
+static List<Usuario> parseJson4(dynamic response) {
+    List<Usuario> products = new List<Usuario>();
+    List jsonParsed = response.toList();
+    for (int i = 0; i < jsonParsed.length; i++) {
+      products.add(new Usuario.fromJsonMap(jsonParsed[i]));
+    }
+
+    return products;
+}
+
+static String parseJson5(dynamic response) {
+    List<Usuario> products = new List<Usuario>();
+    List jsonParsed = response.toList();
+    for (int i = 0; i < jsonParsed.length; i++) {
+      products.add(new Usuario.fromJsonMap(jsonParsed[i]));
+    }
+
+    return products[0].nick;
+}
+
 
 
 
@@ -60,6 +91,8 @@ String priv;
 String nick;
 String pass;
 String correo;
+String test;
+String idUser;
 
 
 Usuario ({
@@ -68,7 +101,9 @@ this.id,
 this.priv,
 this.nick,
 this.pass,
-this.correo
+this.correo,
+this.test,
+this.idUser
 
 });
 
@@ -78,8 +113,9 @@ Usuario.fromJsonMap(Map<String,dynamic> json){
 
 id         = json['id'];
 priv       = json['priv'];
-nick       = json['nick'];
+nick       = json['username'];
 pass       = json['password'];
+idUser       = json['idU'];
 }
 
 

@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:funapp/src/models/usuario_model.dart';
+import 'package:funapp/src/pages/home_page.dart';
 import 'package:funapp/src/utils/bubble_indication_painter.dart';
 import 'package:funapp/src/style/theme.dart' as Theme;
 import 'package:flutter_recaptcha_v2/flutter_recaptcha_v2.dart';
+import 'package:funapp/src/widgets/card_swiper.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -984,6 +987,8 @@ _limpiar(){
     }else{
        print('Mail existe');
         existeMail = true;
+
+        return datauser;
        
     }
  }
@@ -1116,20 +1121,26 @@ _alertaPassC(){
        if(registrado==true)
       {
 
-        usuario.setCorreo(loginEmailController.text);
-          print(usuario.getCorreo());
+  
 
            final decodedData = json.decode(response.body);
           final priv =  usuario.parseJson(decodedData);
           
 
         if(priv == '1'){
-
-         Navigator.of(context).pop();
+/* 
+          Navigator.of(context).pop();
         Navigator.pushNamed(context, 'homePage');
-        _alertaPrimera();  
+        _alertaPrimera();   */ 
 
-      
+          var route = new MaterialPageRoute(
+            builder:  (BuildContext context){
+              return new HomePage(value:loginEmailController.text);
+            }
+          );
+
+          Navigator.of(context).push(route);
+
          
 
         }else{
@@ -1203,6 +1214,27 @@ _alertaPrimera(){
   
 
   }
+
+
+  
+Future<List<Usuario>> getMail2(String mail) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/existeEmail.php"
+   ,body:{
+     "mail" : mail,
+   });
+
+   final decodedData = json.decode(response.body);
+
+ final denuncia = Us.parseJson4(decodedData);
+ //final denuncia = new Den.fromJsonList(decodedData);
+
+ // print (denuncia.item[0].titulo);
+  return denuncia;
+       
+    
+ }
+
 }
   
 

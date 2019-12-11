@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 class DenunciaDetalleDos extends StatefulWidget {
 
 
-  
+
 
   DenunciaDetalleDos({Key key}) : super(key: key);
 
@@ -24,6 +24,7 @@ class DenunciaDetalleDos extends StatefulWidget {
 }
 
 class _DenunciaDetalleDosState extends State<DenunciaDetalleDos> {
+  
 
   String unico;
   String info;

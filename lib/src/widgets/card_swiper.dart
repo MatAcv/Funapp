@@ -8,12 +8,14 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 
 class CardSwiper extends StatelessWidget {
+  
 
        List<dynamic> denunciass = new List();
        final List<Denuncia> denuncias;
+       final String pp ='';
        String poster = '';
        
-  CardSwiper({@required this.denuncias});
+  CardSwiper({this.denuncias});
  
   @override
   Widget build(BuildContext context) {  

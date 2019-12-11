@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 
 class RegistroFunas extends StatefulWidget {
 
+String value;
+RegistroFunas({Key key, @required this.value}) : super (key : key);
 
   @override
   _RegistroFunasState createState() => _RegistroFunasState();
@@ -35,6 +37,9 @@ class _RegistroFunasState extends State<RegistroFunas> {
   String funadoS;
   String histS;
   String linkS;
+  String correo ;
+  String nick;
+  String idUser;
 
 
 
@@ -56,8 +61,7 @@ class _RegistroFunasState extends State<RegistroFunas> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                
+              child: TextField(               
                   maxLength: 50,
                 controller: tituloFuna,
                 decoration: InputDecoration(
@@ -126,6 +130,13 @@ class _RegistroFunasState extends State<RegistroFunas> {
         // the text that the user has entered into the text field.
         onPressed: () {
 
+           correo= widget.value;
+         //  print(correo+'jeje');
+           
+           getUsername(widget.value);
+           getId(widget.value);
+       
+
           if(tituloFuna.text.trim() == '' || nomFunado.text.trim() =='' || hist.text.trim() =='')
           {
               completeCampos();
@@ -174,28 +185,21 @@ class _RegistroFunasState extends State<RegistroFunas> {
 
 
 
- enviarRegistro(String titulo, String descripcion, String poster, String link, String id_f, String id_u ) async{
+ enviarRegistro(String titulo, String descripcion, String poster, String link, String id_f,String idUser, String nick ) async{
 
 
-
-    final resp = await http.post('http://yenya.000webhostapp.com/getNick.php', body: {
-       "id_user" : id_u,
-
-  });
-  final decodedData = json.decode(resp.body);
-   final f =  Us.parseJson(decodedData);
-   print('nick ='+f);
-
-    await http.post("http://yenya.000webhostapp.com/adddata_paso.php",body:{
+   final resp= await http.post("http://yenya.000webhostapp.com/adddata_paso.php",body:{
      "titulo" : titulo,
      "descripcion" : descripcion,
      "poster" : poster,
      "link_post" : link,
      "id_funado" : id_f,
-     "id_user" : id_u,
-     "nick" : f
+     "id_user" : idUser,
+     "nick" : nick,
 
    });
+
+   return resp;
 
  }
 
@@ -253,12 +257,12 @@ return showDialog(
             new FlatButton(
               child: new Text("Enviar"),
               onPressed: () {
-
-                setPoster();
-                enviarRegistro(tituloFuna.text, hist.text, p ,link.text, nomFunado.text, info);
-               Navigator.of(context).pop();
                
-                Navigator.pushNamed(context, 'homePage');
+                setPoster();
+                enviarRegistro(tituloFuna.text, hist.text, p ,link.text, nomFunado.text,idUser, nick);
+               Navigator.of(context).pop();
+              Navigator.of(context).pop();
+ 
 
                 _alertaPrimera();
               },
@@ -299,5 +303,35 @@ return showDialog(
   
 
   }
+
+
+ getUsername(String mail) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/getUsername.php"
+   ,body:{
+     "mail" : mail,
+   });
+
+    var datauser =json.decode(response.body);
+
+   String denuncia = Us.parseJson(datauser);
+
+      nick = denuncia;
+    
+ }
+ getId(String mail) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/getId.php"
+   ,body:{
+     "mail" : mail,
+   });
+
+    var datauser =json.decode(response.body);
+
+   String denuncia = Us.parseJsonId(datauser);
+
+      idUser = denuncia;
+    
+ }
 
 }

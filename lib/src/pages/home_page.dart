@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:funapp/src/models/usuario_model.dart';
+import 'package:funapp/src/pages/registro_denuncias.dart';
 import 'package:wifi/wifi.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
@@ -17,22 +18,30 @@ import 'package:get_ip/get_ip.dart';
 class HomePage extends StatefulWidget {
 
 
+String value;
+HomePage({Key key, @required this.value}) : super (key : key);
+  
   @override
   _HomePageState createState() => _HomePageState();
+
 }
 
 
 
 class _HomePageState extends State<HomePage> {
 
+
   String info;
   String ip;
 
   TextoRegistro txt = new TextoRegistro();
 
-
-
+ 
+  
   Usuario usuario = Usuario();
+ 
+
+  
 
 
      List<dynamic> lista = new List();
@@ -42,12 +51,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
-        print(usuario.getCorreo());
 
+  
      final Denuncia denuncia = ModalRoute.of(context).settings.arguments; 
-    
-    
     
     return Scaffold(
        appBar: AppBar(
@@ -87,15 +93,19 @@ class _HomePageState extends State<HomePage> {
                 RaisedButton(
                  child: Text("Get Correo"),
                  onPressed :(){
-           
-                           
+                //  print('${widget.value}');
+                    usuario.setCorreo(widget.value);
+                    print(usuario.getCorreo());
+                   var route = new MaterialPageRoute(
+                   builder:  (BuildContext context){
+                     return new RegistroFunas(value:widget.value);
+                      }
+                      );
+                         Navigator.of(context).push(route);
                    //Navigator.pushNamed(context, 'registroFunas'); 
                    }               
-               ) 
-           
-               ,
-
-                  WillPopScope(
+               ),
+                 WillPopScope(
                 onWillPop: () async => false,
                     child: Container(),
               ),
