@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:funapp/src/pages/denuncia_detalle.dart';
+import 'package:funapp/src/pages/denuncia_detalle_2.dart';
+import 'package:funapp/src/pages/denuncia_detalle_admin.dart';
+import 'package:funapp/src/pages/denuncia_detalle_prod.dart';
 import 'package:funapp/src/pages/home_page.dart';
+import 'package:funapp/src/pages/home_page_admin.dart';
+import 'package:funapp/src/pages/home_page_prod.dart';
+import 'package:funapp/src/pages/login.dart';
+import 'package:funapp/src/pages/recuperar_pass.dart';
 import 'package:funapp/src/pages/registro_denuncias.dart';
+import 'package:funapp/src/pages/registro_usuario.dart';
 
 
 
@@ -17,9 +25,17 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       initialRoute : '/',
       routes: {
-        '/' : (BuildContext context) => HomePage(),
+        'homePage' : (BuildContext context) => HomePage(),
         'detalleDenuncia' : (BuildContext context) =>DetalleDenuncia(),
         'registroFunas': (BuildContext context) =>RegistroFunas(),
+        '/' : (BuildContext context) => LoginPage(),
+        'registroUser' : (BuildContext context) => RegistroUsuario(),
+         'denunciaDetalleDos' : (BuildContext context) => DenunciaDetalleDos(),
+         'homePageAdmin' : (BuildContext context) => HomePageAdmin(),
+         'denunciaDetalleAdmin' : (BuildContext context) => DenunciaDetalleAdmin(),
+         'homePageProd' : (BuildContext context) => HomePageProd(),
+         'denunciaDetalleProd' : (BuildContext context) => DenunciaDetalleProd(),
+         'recuperarPass' : (BuildContext context) => RecuperarPass(),
  
       },
     );

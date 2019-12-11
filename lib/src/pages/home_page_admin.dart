@@ -1,49 +1,37 @@
-import 'dart:io';
-import 'package:funapp/src/models/usuario_model.dart';
-import 'package:wifi/wifi.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:funapp/src/models/denuncias_model.dart';
 import 'package:funapp/src/models/texto_registro.dart';
-import 'package:funapp/src/providers/denuncias_provider.dart';
-import 'package:funapp/src/search/search_delegate.dart';
+import 'package:funapp/src/providers/denuncias_provider_admin.dart';
 import 'package:funapp/src/widgets/card_swiper.dart';
+import 'package:funapp/src/widgets/card_swiper_admin.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:get_ip/get_ip.dart';
 
-
-class HomePage extends StatefulWidget {
+class HomePageAdmin extends StatefulWidget {
 
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageAdminState createState() => _HomePageAdminState();
 }
 
 
 
-class _HomePageState extends State<HomePage> {
+class _HomePageAdminState extends State<HomePageAdmin> {
 
   String info;
-  String ip;
 
   TextoRegistro txt = new TextoRegistro();
 
-
-
-  Usuario usuario = Usuario();
-
-
      List<dynamic> lista = new List();
-     final denunciasProvider = new DenunciasProvider();
+     final denunciasProvider = new DenunciasProviderAdmin();
      final denuncia = new Denuncia();
      List<Denuncia> ls = new List();
 
   @override
   Widget build(BuildContext context) {
     
-        print(usuario.getCorreo());
+    
 
      final Denuncia denuncia = ModalRoute.of(context).settings.arguments; 
     
@@ -59,13 +47,13 @@ class _HomePageState extends State<HomePage> {
                },
               ), 
         centerTitle: true,
-        title : Text('Funapp',textAlign: TextAlign.center,),
+        title : Text('Funas por aprobar',textAlign: TextAlign.center,),
         backgroundColor: Colors.indigoAccent,
         actions: <Widget>[
           IconButton(
             icon: Icon (Icons.search),
             onPressed: (){
-                  showSearch(context: context, delegate: DataSearch());
+                
             },
           )
         ],
@@ -78,27 +66,19 @@ class _HomePageState extends State<HomePage> {
                _swiperTarjetas(),
    
                RaisedButton(
-                 child: Text("Enviar funa"),
+                 child: Text("Eliminar Funas en produccion"),
                  onPressed :(){
-                   _alertaPrimera();                  
-                   //Navigator.pushNamed(context, 'registroFunas'); 
-                   }               
-               ) ,
-                RaisedButton(
-                 child: Text("Get Correo"),
-                 onPressed :(){
-           
-                           
-                   //Navigator.pushNamed(context, 'registroFunas'); 
+                              
+                   Navigator.pushNamed(context, 'homePageProd'); 
                    }               
                ) 
-           
                ,
-
                   WillPopScope(
-                onWillPop: () async => false,
+                onWillPop: _onBackPressed,
                     child: Container(),
               ),
+
+              
              ],
            ),
          ),
@@ -119,7 +99,7 @@ class _HomePageState extends State<HomePage> {
 
         if (snapshot.hasData)
         {
-      return CardSwiper(denuncias: snapshot.data);
+      return CardSwiperAdmin(denuncias: snapshot.data);
           
         } else{
 
@@ -135,23 +115,6 @@ class _HomePageState extends State<HomePage> {
  
   }
 
-
- Future <List> login() async{
-
-   final response = await http.post("http://192.168.0.10:8080/test/login.php",body:{
-     "username" : "Juan",
-     "password" : "12345"
-
-   });
-
-    var datauser =json.decode(response.body);
-
-    if(datauser.length == 0){
-      print('incorrecto');
-    }else{
-      print('correcto');
-    }
- }
 
  
 
@@ -272,9 +235,4 @@ Future<bool> _onBackPressed() {
           );
         });
   }
-
-
-
-
-  
 }

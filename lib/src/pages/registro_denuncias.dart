@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:funapp/src/models/texto_registro.dart';
-import 'dart:convert';
+import 'package:funapp/src/models/usuario_model.dart';
+
 import 'package:http/http.dart' as http;
 
 
@@ -15,13 +18,14 @@ class RegistroFunas extends StatefulWidget {
 
 class _RegistroFunasState extends State<RegistroFunas> {
 
+  String info;
 
   final TextEditingController tituloFuna = TextEditingController();
   final TextEditingController nomFunado = TextEditingController();
   final TextEditingController hist = TextEditingController();
   final TextEditingController link = TextEditingController();
 
-
+   final usuario = new Usuario();
 
   Random rnd = new Random();
   int r ;
@@ -40,10 +44,9 @@ class _RegistroFunasState extends State<RegistroFunas> {
    @override
   Widget build(BuildContext context) {
 
-    
+    getDevice();
 
-
-    nomFunado.text = txt.getNombre();
+ 
     return Scaffold(
       appBar: AppBar(
         title: Text('Envía tu funa'),
@@ -55,7 +58,7 @@ class _RegistroFunasState extends State<RegistroFunas> {
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 
-                
+                  maxLength: 50,
                 controller: tituloFuna,
                 decoration: InputDecoration(
                     labelText: "Titulo *",          
@@ -69,17 +72,15 @@ class _RegistroFunasState extends State<RegistroFunas> {
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 
-                
+                maxLength: 50,
                 controller: nomFunado,
                 decoration: InputDecoration(
                     labelText: "Nombre del Funado *",          
                       hintText: 'Escribe el nombre completo del funado',
-
+                    
 
                 ),
                 onChanged: (valor){
-                  txt.setNombre(valor);   
-                  print(txt.getNombre());
 
                 },
               ),
@@ -88,9 +89,10 @@ class _RegistroFunasState extends State<RegistroFunas> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: new TextField( 
+                maxLength: 6000,
               decoration: const InputDecoration(
-              hintText: 'Copia y pega aqui toda la historia *',
-              labelText: 'Funa',
+              hintText: 'Copia y pega aqui toda la historia',
+              labelText: 'Funa **',
                 ),
             autofocus: false,
             maxLines: null,
@@ -101,11 +103,13 @@ class _RegistroFunasState extends State<RegistroFunas> {
 
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TextField(              
+              child: TextField(       
+                 maxLength: 100,       
                 controller: link,
                 decoration: InputDecoration(
                     labelText: "Link post red social",          
                       hintText: 'Pega el link acá del post en Instagram o Facebook',
+                      counterText: 'Copia y pega el link con formato https://www.instagram.com/p/xxxx'
                 ),
               ),
               
@@ -121,39 +125,14 @@ class _RegistroFunasState extends State<RegistroFunas> {
         // When the user presses the button, show an alert dialog containing
         // the text that the user has entered into the text field.
         onPressed: () {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                // Retrieve the text the that user has entered by using the
-                // TextEditingController.
-                title: new Text("Atención"),
-                content: Text('Enviar funa?'),
-                actions: <Widget>[
-                    new FlatButton(
-              child: new Text("Cancelar"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Enviar"),
-              onPressed: () {
 
-                setPoster();
-                enviarRegistro(tituloFuna.text, hist.text, p ,link.text, nomFunado.text, '1');
-               Navigator.of(context).pop();
-               
-                Navigator.pushNamed(context, '/');
-
-                _alertaPrimera();
-              },
-            ),
-            
-                ],
-              );
-            },
-          );
+          if(tituloFuna.text.trim() == '' || nomFunado.text.trim() =='' || hist.text.trim() =='')
+          {
+              completeCampos();
+          }else{
+              enviarFuna();
+          }
+          
         },
         tooltip: 'Show me the value!',
         child: Icon(Icons.send),
@@ -195,18 +174,26 @@ class _RegistroFunasState extends State<RegistroFunas> {
 
 
 
-
- Future <List> enviarRegistro(String titulo, String descripcion, String poster, String link, String id_f, String id_u ) async{
-
+ enviarRegistro(String titulo, String descripcion, String poster, String link, String id_f, String id_u ) async{
 
 
-    await http.post("http://192.168.0.10:8080/test/adddata.php",body:{
+
+    final resp = await http.post('http://yenya.000webhostapp.com/getNick.php', body: {
+       "id_user" : id_u,
+
+  });
+  final decodedData = json.decode(resp.body);
+   final f =  Us.parseJson(decodedData);
+   print('nick ='+f);
+
+    await http.post("http://yenya.000webhostapp.com/adddata_paso.php",body:{
      "titulo" : titulo,
      "descripcion" : descripcion,
      "poster" : poster,
      "link_post" : link,
      "id_funado" : id_f,
-     "id_user" : id_u
+     "id_user" : id_u,
+     "nick" : f
 
    });
 
@@ -228,7 +215,89 @@ p =r.toString();
 
 }
 
+ Future<String> getDevice() async{
 
 
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+var brand = androidInfo.androidId;
+
+setState(() {
+  info = brand;
+});
+
+return info;
+
+}
+
+
+
+enviarFuna(){
+
+return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                // Retrieve the text the that user has entered by using the
+                // TextEditingController.
+                title: new Text("Atención"),
+                content: Text('Enviar funa?'),
+                actions: <Widget>[
+                    new FlatButton(
+              child: new Text("Cancelar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Enviar"),
+              onPressed: () {
+
+                setPoster();
+                enviarRegistro(tituloFuna.text, hist.text, p ,link.text, nomFunado.text, info);
+               Navigator.of(context).pop();
+               
+                Navigator.pushNamed(context, 'homePage');
+
+                _alertaPrimera();
+              },
+            ),
+            
+                ],
+              );
+            },
+          );
+
+}
+
+    
+   completeCampos(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text("Completa todos los campos con *" ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
+  }
 
 }

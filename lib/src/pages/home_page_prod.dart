@@ -1,49 +1,39 @@
-import 'dart:io';
-import 'package:funapp/src/models/usuario_model.dart';
-import 'package:wifi/wifi.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:funapp/src/models/denuncias_model.dart';
 import 'package:funapp/src/models/texto_registro.dart';
-import 'package:funapp/src/providers/denuncias_provider.dart';
-import 'package:funapp/src/search/search_delegate.dart';
+import 'package:funapp/src/providers/denuncias_provider_admin.dart';
+import 'package:funapp/src/search/search_delegate_admin.dart';
 import 'package:funapp/src/widgets/card_swiper.dart';
+import 'package:funapp/src/widgets/card_swiper_admin.dart';
+import 'package:funapp/src/widgets/card_swiper_prod.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:get_ip/get_ip.dart';
 
-
-class HomePage extends StatefulWidget {
+class HomePageProd extends StatefulWidget {
 
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageProdState createState() => _HomePageProdState();
 }
 
 
 
-class _HomePageState extends State<HomePage> {
+class _HomePageProdState extends State<HomePageProd> {
 
   String info;
-  String ip;
 
   TextoRegistro txt = new TextoRegistro();
 
-
-
-  Usuario usuario = Usuario();
-
-
      List<dynamic> lista = new List();
-     final denunciasProvider = new DenunciasProvider();
+     final denunciasProvider = new DenunciasProviderAdmin();
      final denuncia = new Denuncia();
      List<Denuncia> ls = new List();
 
   @override
   Widget build(BuildContext context) {
     
-        print(usuario.getCorreo());
+    
 
      final Denuncia denuncia = ModalRoute.of(context).settings.arguments; 
     
@@ -57,15 +47,18 @@ class _HomePageState extends State<HomePage> {
 
                  cerrarSesion();
                },
+
+                
+
               ), 
         centerTitle: true,
-        title : Text('Funapp',textAlign: TextAlign.center,),
+        title : Text('Produccion',textAlign: TextAlign.center,),
         backgroundColor: Colors.indigoAccent,
         actions: <Widget>[
           IconButton(
             icon: Icon (Icons.search),
             onPressed: (){
-                  showSearch(context: context, delegate: DataSearch());
+                showSearch(context: context, delegate: DataSearchAdmin() );
             },
           )
         ],
@@ -76,29 +69,7 @@ class _HomePageState extends State<HomePage> {
 
              children: <Widget>[
                _swiperTarjetas(),
-   
-               RaisedButton(
-                 child: Text("Enviar funa"),
-                 onPressed :(){
-                   _alertaPrimera();                  
-                   //Navigator.pushNamed(context, 'registroFunas'); 
-                   }               
-               ) ,
-                RaisedButton(
-                 child: Text("Get Correo"),
-                 onPressed :(){
-           
-                           
-                   //Navigator.pushNamed(context, 'registroFunas'); 
-                   }               
-               ) 
-           
-               ,
-
-                  WillPopScope(
-                onWillPop: () async => false,
-                    child: Container(),
-              ),
+      
              ],
            ),
          ),
@@ -114,12 +85,12 @@ class _HomePageState extends State<HomePage> {
      // return CardSwiper();
 
      return FutureBuilder(
-      future: denunciasProvider.getTitulo(),
+      future: denunciasProvider.getProd(),
       builder: (BuildContext context, AsyncSnapshot <List>snapshot) {
 
         if (snapshot.hasData)
         {
-      return CardSwiper(denuncias: snapshot.data);
+      return CardSwiperProd(denuncias: snapshot.data);
           
         } else{
 
@@ -272,9 +243,4 @@ Future<bool> _onBackPressed() {
           );
         });
   }
-
-
-
-
-  
 }

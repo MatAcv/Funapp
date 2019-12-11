@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Widgets/FormCard.dart';
-import 'Widgets/SocialIcons.dart';
-import 'CustomIcons.dart';
+import 'package:funapp/CustomIcons.dart';
+import 'package:funapp/src/models/usuario_model.dart';
+import 'package:funapp/src/providers/usuarios_provider.dart';
+import 'package:funapp/src/widgets/FormCard.dart';
+import 'package:funapp/src/widgets/SocialIcons.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,7 +14,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  bool registrado = false;
   bool _isSelected = false;
+ final usuario = new Usuario();
+
+    final TextEditingController userController = TextEditingController();
+      final TextEditingController passController = TextEditingController();
 
   void _radio() {
     setState(() {
@@ -53,21 +63,20 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
       body: Stack(
+
         fit: StackFit.expand,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Image.asset("assets/image_01.png"),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Image.asset("assets/image_02.png")
-            ],
+          Container(
+          
+            decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/src/assets/image_04.png"),
+            fit: BoxFit.cover,
           ),
+        ),
+          ),
+
+       
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0),
@@ -76,12 +85,13 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     children: <Widget>[
                       Image.asset(
-                        "assets/logo.png",
-                        width: ScreenUtil.getInstance().setWidth(110),
-                        height: ScreenUtil.getInstance().setHeight(110),
+                        "lib/src/assets/logo2.png",
+                        width: ScreenUtil.getInstance().setWidth(150),
+                        height: ScreenUtil.getInstance().setHeight(150),
                       ),
-                      Text("FUNA2",
+                      Text("UNAPP",
                           style: TextStyle(
+                            color: Colors.white,
                               fontFamily: "Poppins-Bold",
                               fontSize: ScreenUtil.getInstance().setSp(46),
                               letterSpacing: .6,
@@ -91,27 +101,89 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(180),
                   ),
-                  FormCard(),
+                  new Container(
+      width: double.infinity,
+      height: ScreenUtil.getInstance().setHeight(500),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0.0, 15.0),
+                blurRadius: 15.0),
+            BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0.0, -10.0),
+                blurRadius: 10.0),
+          ]),
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("Login",
+                style: TextStyle(
+                    fontSize: ScreenUtil.getInstance().setSp(45),
+                    fontFamily: "Poppins-Bold",
+                    letterSpacing: .6)),
+            SizedBox(
+              height: ScreenUtil.getInstance().setHeight(30),
+            ),
+            Text("Username",
+                style: TextStyle(
+                    fontFamily: "Poppins-Medium",
+                    fontSize: ScreenUtil.getInstance().setSp(26))),
+            TextField(
+              controller : userController,
+              decoration: InputDecoration(
+                  hintText: "username",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+            ),
+            SizedBox(
+              height: ScreenUtil.getInstance().setHeight(30),
+            ),
+            Text("PassWord",
+                style: TextStyle(
+                    fontFamily: "Poppins-Medium",
+                    fontSize: ScreenUtil.getInstance().setSp(26))),
+            TextField(
+              controller : passController,
+              obscureText: true,
+              decoration: InputDecoration(
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+            ),
+            SizedBox(
+              height: ScreenUtil.getInstance().setHeight(35),
+            ),
+          
+          ],
+        ),
+      ),
+    ),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          GestureDetector(
-                            onTap: _radio,
-                            child: radioButton(_isSelected),
-                          ),
-                          SizedBox(
-                            width: 8.0,
-                          ),
-                          Text("Remember me",
-                              style: TextStyle(
-                                  fontSize: 12, fontFamily: "Poppins-Medium"))
-                        ],
+                         mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Nuev@? ",
+                        style: TextStyle(fontFamily: "Poppins-Medium"),
+                      ),
+                      InkWell(
+                        onTap: () {
+                           Navigator.of(context).pop(); 
+                          Navigator.pushNamed(context, 'registroUser');
+                        },
+                        child: Text("Registrate",
+                            style: TextStyle(
+                                color: Color(0xFF5d74e3),
+                                fontFamily: "Poppins-Bold")),
+                      )
+                    ],
                       ),
                       InkWell(
                         child: Container(
@@ -123,18 +195,17 @@ class _LoginPageState extends State<LoginPage> {
                                 Color(0xFF6078ea)
                               ]),
                               borderRadius: BorderRadius.circular(6.0),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFF6078ea).withOpacity(.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
+                              ),
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: ( 
+                              ) {
+
+                              getUser(userController.text,passController.text);
+                              },
                               child: Center(
-                                child: Text("SIGNIN",
+                                child: Text("Ingresa",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: "Poppins-Bold",
@@ -147,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  /* SizedBox(
                     height: ScreenUtil.getInstance().setHeight(40),
                   ),
                   Row(
@@ -200,26 +271,8 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {},
                       )
                     ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(30),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "New User? ",
-                        style: TextStyle(fontFamily: "Poppins-Medium"),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Text("SignUp",
-                            style: TextStyle(
-                                color: Color(0xFF5d74e3),
-                                fontFamily: "Poppins-Bold")),
-                      )
-                    ],
-                  )
+                  ), */
+ 
                 ],
               ),
             ),
@@ -227,5 +280,117 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+
+
+
+
+
+  }
+
+  getUser(String user,String password) async{
+
+   final response = await http.post( "http://yenya.000webhostapp.com/sesion.php"  /* "http://192.168.0.10:8080/test/sesion.php" */
+   ,body:{
+     "username" : user,
+     "password" : password,
+   });
+
+ 
+
+
+    var datauser =json.decode(response.body);
+
+    if(datauser.length == 0){
+      print('Usuario no registrado');
+      registrado = false;
+      _errorLogin();
+
+    }else{
+       print('Usuario Existe');
+       registrado = true;
+
+       if(registrado==true)
+      {
+
+           final decodedData = json.decode(response.body);
+          final priv =  usuario.parseJson(decodedData);
+
+        if(priv == '1'){
+
+        Navigator.of(context).pop();
+        Navigator.pushNamed(context, 'homePage');
+        _alertaPrimera();
+         
+
+        }else{
+            Navigator.of(context).pop();
+        Navigator.pushNamed(context, 'homePageAdmin');
+        _alertaPrimera();
+
+        }
+ 
+          }else{
+           
+          }
+    }
+ }
+
+
+
+_alertaPrimera(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text("Ingresaste con éxito" ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
+  }
+
+
+  _errorLogin(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new Text("Usuario y/o contraseña incorrectos" ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
   }
 }
