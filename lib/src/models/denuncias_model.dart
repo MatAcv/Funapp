@@ -112,6 +112,12 @@ getPoster(){
       return 'lib/src/assets/bg${poster}.jpeg';
 
 }
+getIdPoster(){
+
+return poster;
+
+}
+
 
 getViews(){
   return views;
@@ -149,4 +155,6 @@ getFunado(){
 
   return id_funado;
 }
+
+
 }

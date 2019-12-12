@@ -14,8 +14,6 @@ import 'package:url_launcher/url_launcher.dart';
 class DenunciaDetalleDos extends StatefulWidget {
 
 
-
-
   DenunciaDetalleDos({Key key}) : super(key: key);
 
   @override
@@ -58,6 +56,7 @@ id = denuncia.getId();
                }
               ), 
               title: Text("Testimonio"),
+              backgroundColor: Colors.indigoAccent,
               centerTitle: true,
             ),
     
@@ -102,41 +101,34 @@ id = denuncia.getId();
     ), */
 
     SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-
-          Text(denuncia.getTitulo(), style: TextStyle(fontSize: 40),),
-          Padding(padding:EdgeInsets.only(top: 20.0)),
-            Text('Por: '+denuncia.getNick() ,style: TextStyle(fontSize: 20),textAlign: TextAlign.start,),
-           Padding(padding:EdgeInsets.only(top: 20.0)),
-          Padding(padding:EdgeInsets.symmetric(horizontal: 10.0),child: Text(denuncia.getDescripcion(),style: TextStyle(fontSize: 20))),
-          Padding(padding:EdgeInsets.only(top: 20.0)),
-          RaisedButton(
-            onPressed: (){
- print(info2);
-            },
+      child: Container(
+        decoration: new BoxDecoration(
+                 image: DecorationImage(
+            image: AssetImage('lib/src/assets/image_03.png'),
+            fit: BoxFit.cover,
           ),
+                ),
+        child: Column(
+          children: <Widget>[
 
-        
+            Text(denuncia.getTitulo(), style: TextStyle(fontSize: 40), ),
+            Padding(padding:EdgeInsets.only(top: 20.0)),
+              Text('Por: '+denuncia.getNick() ,style: TextStyle(fontSize: 20),textAlign: TextAlign.start,),
+             Padding(padding:EdgeInsets.only(top: 20.0)),
+             Text('Funado: '+denuncia.getFunado() ,style: TextStyle(fontSize: 20),textAlign: TextAlign.start,),
+              Padding(padding:EdgeInsets.only(top: 20.0)),
+            Padding(padding:EdgeInsets.symmetric(horizontal: 10.0),child: Text(denuncia.getDescripcion(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
+            Padding(padding:EdgeInsets.only(top: 20.0)),
+         
     returnLink(denuncia.getLink()),
      new WillPopScope(
-              onWillPop: () async => false,
-               child: Container()
-
-            ),         
-
-            FloatingActionButton(
-              onPressed: (){
-
-                print(info);
-
-               
-              },
-            )       
-     ],
+                onWillPop: () async => false,
+                 child: Container()
+            ),              
+          ],
+        ),
       ),
-    )
-        
+    )     
   );
   }
 
@@ -156,15 +148,7 @@ setState(() {
  
 });
 
-
-
 }
-
-
-
-
-
-
 
 
  Future insertaView(String id_user, String id_denuncia) async{

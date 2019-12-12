@@ -58,11 +58,11 @@ class CardSwiper extends StatelessWidget {
                           Container( 
                             padding: EdgeInsets.only(left: 20.0,top: 40.0),   
                             margin: EdgeInsets.all(10.0),                    
-                            child: Text("${denuncias[index].titulo}",style: TextStyle(fontSize: 25 ),),),
+                            child: Text("${denuncias[index].titulo}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold ),),),
                             Container(
                               margin: EdgeInsets.only(right: 10),
                               padding: EdgeInsets.only(left: 20.0,top: 200.0),    
-                              child: Text("${denuncias[index].descripcion}",overflow: TextOverflow.visible,),
+                              child: Text("${denuncias[index].descripcion}",style: TextStyle(fontWeight: FontWeight.bold),overflow: TextOverflow.visible,),
                             ),
                             
                             

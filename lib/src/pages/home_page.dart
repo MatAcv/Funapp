@@ -1,7 +1,6 @@
-import 'dart:io';
+
 import 'package:funapp/src/models/usuario_model.dart';
 import 'package:funapp/src/pages/registro_denuncias.dart';
-import 'package:wifi/wifi.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -12,7 +11,8 @@ import 'package:funapp/src/search/search_delegate.dart';
 import 'package:funapp/src/widgets/card_swiper.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:get_ip/get_ip.dart';
+import 'package:funapp/src/style/theme.dart' as Theme;
+
 
 
 class HomePage extends StatefulWidget {
@@ -76,28 +76,38 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-       body: SingleChildScrollView(
-         child: Container(
-           child: Column(
+       body: SingleChildScrollView(      
+           child: Container(
+               decoration: new BoxDecoration(
+                 image: DecorationImage(
+            image: AssetImage('lib/src/assets/image_04.png'),
+            fit: BoxFit.cover,
+          ),
+                ),
+             child: Column(
 
-             children: <Widget>[
-               _swiperTarjetas(),
+               children: <Widget>[
+                 _swiperTarjetas(),
    
-               RaisedButton(
-                 child: Text("Enviar funa"),
-                 onPressed :(){
-                   _alertaPrimera();                  
-                   //Navigator.pushNamed(context, 'registroFunas'); 
-                   }               
-               ) ,
-                
-                 WillPopScope(
-                onWillPop: () async => false,
-                    child: Container(),
-              ),
-             ],
+                 RaisedButton(
+                   child: Text("Enviar funa"),
+                   onPressed :(){
+                     _alertaPrimera();                  
+                     //Navigator.pushNamed(context, 'registroFunas'); 
+                     }               
+                 ) ,
+                  
+                   WillPopScope(
+                  onWillPop: () async => false,
+                      child: Container(),
+                ),
+                  Container(
+                    height: 500.0,
+                  )
+               ],
+             ),
            ),
-         ),
+         
        ),
      
        

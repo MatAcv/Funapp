@@ -35,6 +35,7 @@ class _DenunciaDetalleAdminState extends State<DenunciaDetalleAdmin> {
   String n;
   String u;
   String idU;
+  String tD;
  
   String unico;
   String info;
@@ -144,7 +145,9 @@ class _DenunciaDetalleAdminState extends State<DenunciaDetalleAdmin> {
                 d = denuncia.getDescripcion();
                 l = denuncia.getLink();
                 f = denuncia.getFunado();
-                idPoster = denuncia.getId();
+                idPoster = denuncia.getIdPoster();
+                id =denuncia.getId();
+                tD =denuncia.getTitulo();
                 n = denuncia.getNick();
                 u = denuncia.getIdUser();
 
@@ -364,8 +367,9 @@ return showDialog(
               onPressed: () {
 
                 setPoster();
-                enviarRegistro(t,d,p,l,f,u,n);
-                 eliminarRegistro(idPoster);
+                enviarRegistro(t,d,idPoster,l,f,u,n);
+                insertFunado(f, tD);
+                 eliminarRegistro(id);
                Navigator.of(context).pop();
                
               Navigator.pushNamed(context, 'homePageAdmin');
@@ -436,4 +440,20 @@ return showDialog(
 }
 
 
+
+insertFunado(String funado,String id) async{
+
+
+
+    await http.post("http://yenya.000webhostapp.com/insertFunado.php",body:{
+     "funado" : funado,
+     "id" : id
+
+
+
+   });
+
+   
+
+ }
 }
