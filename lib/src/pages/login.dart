@@ -42,6 +42,8 @@ class _LoginPageState extends State<LoginPage>
   bool _obscureTextSignupConfirm = true;
   bool registrado = false;
   bool existeMail = false;
+  bool existeNick= false;
+  String primVez;
   
   String info;
 
@@ -359,7 +361,7 @@ class _LoginPageState extends State<LoginPage>
                     ),
                     onPressed: () {
 
-                      login(loginEmailController.text,loginPasswordController.text);
+                      login(loginEmailController.text.trim(),loginPasswordController.text);
                     }
                         
                         ),
@@ -677,15 +679,17 @@ class _LoginPageState extends State<LoginPage>
                       ),
                     ),
                     onPressed: (){    
-                      getMail(signupEmailController.text);
+                      getNick(signupNameController.text.trim());
+                      getMail(signupEmailController.text.trim());
 
                      
                                                            
                       if(validaCampos()){         
                         if(registrado == false){    
+                       
 
                            _confirmarRegistro();
-                         
+                          
                         }else{
                          _registrado();
                         }
@@ -993,6 +997,28 @@ _limpiar(){
     }
  }
 
+getNick(String nick) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/getNickReg.php"
+   ,body:{
+     "username" : nick,
+   });
+
+    var datauser =json.decode(response.body);
+
+    if(datauser.length == 0){
+      print('Nick no existe');
+     existeNick = false;
+    }else{
+       print('Nick ya existe');
+        existeNick = true;
+
+        return datauser;
+       
+    }
+ }
+
+
 
    _confirmarRegistro(){
     
@@ -1018,11 +1044,18 @@ _limpiar(){
               onPressed: () {
                 
                           if(existeMail ==false){ 
+                            if(existeNick == false)
+                            {
                             Navigator.of(context).pop();                             
-                          enviarUser(signupNameController.text, signupPasswordController.text, info, signupEmailController.text);
+                          enviarUser(signupNameController.text.trim(), signupPasswordController.text, info, signupEmailController.text.trim());
                           _alertaRegistrado();
                           _onSignInButtonPress();
                           _limpiar();
+                            }else{
+                              Navigator.of(context).pop();
+                              _alertaNick();
+                              
+                            }
                           }else{
                             Navigator.of(context).pop();
                            _alertaMail();
@@ -1118,6 +1151,17 @@ _alertaPassC(){
        print('Usuario Existe');
        registrado = true;
 
+          final res = await http.post("http://yenya.000webhostapp.com/getPrimVez.php"
+   ,body:{
+     "mail" : mail,
+   });
+
+    var datause =json.decode(res.body);
+
+   String denunci = Us.parseJson6(datause);
+
+      primVez= denunci;
+
        if(registrado==true)
       {
 
@@ -1132,7 +1176,7 @@ _alertaPassC(){
           Navigator.of(context).pop();
         Navigator.pushNamed(context, 'homePage');
         _alertaPrimera();   */ 
-
+          
           var route = new MaterialPageRoute(
             builder:  (BuildContext context){
               return new HomePage(value:loginEmailController.text);
@@ -1141,6 +1185,15 @@ _alertaPassC(){
 
           Navigator.of(context).push(route);
 
+          if(primVez=='1'){
+
+              _alertaPrimera();
+           
+
+          }else{
+               _alertaPrim();
+               upPrimVez(loginEmailController.text);           
+          }
          
 
         }else{
@@ -1215,7 +1268,36 @@ _alertaPrimera(){
 
   }
 
+_alertaPrim(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Mensaje"),
+          content: new SingleChildScrollView(
+            child: Text("Bienvenid@ a Funapp!\n\n•Funapp es una aplicación comunitaria la cual reune todas las funas en un solo lugar y cada uno puede aportar con sus historias.\n\n•Si vas a enviar una Funa, asegurate de ser lo mas detallad@ posible.\n\n•Si quieres saber si una persona esta funad@, puedes buscarl@ por su nombre apretando el icono de lupa en la esquina superior derecha y te apareceran las funas asociadas a esa persona. \n\n•Funapp por el momento no maneja imagenes, por lo tanto si vas a enviar una funa asegurate de adjuntar el link de tu post original en instagram o facebook, este será publicado junto con la funa que envies.\n\n•Ocupa inteligentemente la aplicación y podremos ayudar a mucha gente!. \n\n     •The Funapp team. " ),
+          ),
+                     
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
 
+  }
   
 Future<List<Usuario>> getMail2(String mail) async{
 
@@ -1235,6 +1317,47 @@ Future<List<Usuario>> getMail2(String mail) async{
     
  }
 
+
+_alertaNick(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text("El nick ingresado ya existe, porfavor escoge otro."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
+  }
+
+
+
+
+
+upPrimVez(String mail) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/upPrimVez.php"
+   ,body:{
+     "mail" : mail,
+   });
+    
+ }
 }
   
 

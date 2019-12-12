@@ -90,21 +90,7 @@ class _HomePageState extends State<HomePage> {
                    //Navigator.pushNamed(context, 'registroFunas'); 
                    }               
                ) ,
-                RaisedButton(
-                 child: Text("Get Correo"),
-                 onPressed :(){
-                //  print('${widget.value}');
-                    usuario.setCorreo(widget.value);
-                    print(usuario.getCorreo());
-                   var route = new MaterialPageRoute(
-                   builder:  (BuildContext context){
-                     return new RegistroFunas(value:widget.value);
-                      }
-                      );
-                         Navigator.of(context).push(route);
-                   //Navigator.pushNamed(context, 'registroFunas'); 
-                   }               
-               ),
+                
                  WillPopScope(
                 onWillPop: () async => false,
                     child: Container(),
@@ -188,8 +174,17 @@ class _HomePageState extends State<HomePage> {
             new FlatButton(
               child: new Text("Ir al registro"),
               onPressed: () {
+                
                Navigator.of(context).pop();
-                Navigator.pushNamed(context, 'registroFunas');
+
+              usuario.setCorreo(widget.value);
+                    print(usuario.getCorreo());
+                   var route = new MaterialPageRoute(
+                   builder:  (BuildContext context){
+                     return new RegistroFunas(value:widget.value);
+                      }
+                      );
+                         Navigator.of(context).push(route);
               },
             ),
             

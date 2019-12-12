@@ -65,7 +65,7 @@ class _DenunciaDetalleAdminState extends State<DenunciaDetalleAdmin> {
                leading: new IconButton(
                icon: new Icon(Icons.arrow_back, color: Colors.black),
                onPressed: (){
-                  insertaView(info,denuncia.getId()); 
+             
                Navigator.of(context).pop();
               
                  
@@ -200,48 +200,6 @@ setState(() {
 
 
 
-
- Future insertaView(String id_user, String id_denuncia) async{
-
- final response = await http.post("http://192.168.0.10:8080/test/addviewUser.php"
-   ,body:{
-     "id_user" : id_user,
-     "id_denuncia" : id_denuncia,
-
-
-   });
-
-
-    var datauser =json.decode(response.body);
-
-    if(datauser.length == 0){
-      print('no existe view');
-
-
-    await http.post("http://192.168.0.10:8080/test/addview.php",body:{
-     "id" : id,
-
-
-   });  //inserta view
-   
-    await http.post("http://192.168.0.10:8080/test/insertViewUser.php",body:{
-     "id_user" : id_user,
-     "id_denuncia" : id_denuncia,
-   });  
-
-
-
-
-
-
-    }else{
-       print('existe view');
-  
-    }
-
-
-  
- }
 
 
 

@@ -78,6 +78,16 @@ static String parseJson5(dynamic response) {
     return products[0].nick;
 }
 
+static String parseJson6(dynamic response) {
+    List<Usuario> products = new List<Usuario>();
+    List jsonParsed = response.toList();
+    for (int i = 0; i < jsonParsed.length; i++) {
+      products.add(new Usuario.fromJsonMap(jsonParsed[i]));
+    }
+    print(products[0].primVez);
+    return products[0].primVez;
+}
+
 
 
 
@@ -93,6 +103,7 @@ String pass;
 String correo;
 String test;
 String idUser;
+String primVez;
 
 
 Usuario ({
@@ -103,7 +114,8 @@ this.nick,
 this.pass,
 this.correo,
 this.test,
-this.idUser
+this.idUser,
+this.primVez
 
 });
 
@@ -115,7 +127,8 @@ id         = json['id'];
 priv       = json['priv'];
 nick       = json['username'];
 pass       = json['password'];
-idUser       = json['idU'];
+idUser     = json['idU'];
+primVez    = json['primVez'];
 }
 
 
