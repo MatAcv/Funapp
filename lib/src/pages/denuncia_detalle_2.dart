@@ -44,92 +44,60 @@ id = denuncia.getId();
 
 
     
-   return new Scaffold(
+   return Stack(
+        children:<Widget>[
 
-    appBar: AppBar(
-               leading: new IconButton(
-               icon: new Icon(Icons.arrow_back, color: Colors.black),
-               onPressed: (){
-                  insertaView(info,denuncia.getId()); 
-               Navigator.of(context).pop();
-                 
-               }
-              ), 
-              title: Text("Testimonio"),
-              backgroundColor: Colors.indigoAccent,
-              centerTitle: true,
-            ),
-    
-     
-    body:/* ListView.builder( 
-  
-      itemCount: 1,
-      itemBuilder: (BuildContext context , int index){
-
-     
-        return Stack(
-          children:<Widget>[
-            new Container(
-          margin: EdgeInsets.only(top: 100.0),
-          padding: EdgeInsets.only(left: 10.0),
-          child: new 
-          Text(denuncia.getTitulo(),
-            style: TextStyle(
-              fontSize: 40.0
-            ),),
-        ),
-              Container (
-             padding:EdgeInsets.all(20.0) ,
-             margin: EdgeInsets.only(top: 200.0),
-            constraints: BoxConstraints.tightFor(height: length),
-            child: Text(denuncia.getDescripcion(),style: TextStyle(fontSize: 18.0))
-          ),
-        new WillPopScope(
-              onWillPop: () async => false,
-               child: Container()
-
-            ),
-
-          
-
-
-          ]
-        );
-      },
-
-
-    ), */
-
-    SingleChildScrollView(
-      child: Container(
-        decoration: new BoxDecoration(
-                 image: DecorationImage(
-            image: AssetImage('lib/src/assets/image_03.png'),
+          Image.asset(
+            "lib/src/assets/image_05.png",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
           ),
-                ),
-        child: Column(
-          children: <Widget>[
+          new Scaffold(
+                backgroundColor: Colors.transparent,
+      appBar: AppBar(
+                 leading: new IconButton(
+                 icon: new Icon(Icons.arrow_back, color: Colors.black),
+                 onPressed: (){
+                    insertaView(info,denuncia.getId()); 
+                 Navigator.of(context).pop();
+                   
+                 }
+                ), 
+                title: Text(""),
+                backgroundColor: Colors.purple[200],
+                centerTitle: true,
+              ),
+      
+       
+      body:SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
 
-            Text(denuncia.getTitulo(), style: TextStyle(fontSize: 40), ),
-            Padding(padding:EdgeInsets.only(top: 20.0)),
-              Text('Por: '+denuncia.getNick() ,style: TextStyle(fontSize: 20),textAlign: TextAlign.start,),
-             Padding(padding:EdgeInsets.only(top: 20.0)),
-             Text('Funado: '+denuncia.getFunado() ,style: TextStyle(fontSize: 20),textAlign: TextAlign.start,),
+              Text(denuncia.getTitulo(), style: TextStyle(fontSize: 40,color:Colors.black), ),
+              Padding(padding:EdgeInsets.only(top: 10.0)),
+                Text('Por: '+denuncia.getNick() ,style: TextStyle(fontSize: 20,color:Colors.black),textAlign: TextAlign.start,),
+               Padding(padding:EdgeInsets.only(top: 10.0)),
+               Text('Funado: '+denuncia.getFunado() ,style: TextStyle(fontSize: 20,color:Colors.black),textAlign: TextAlign.start,),
+                Padding(padding:EdgeInsets.only(top: 20.0)),
+              Padding(padding:EdgeInsets.symmetric(horizontal: 10.0),child: Text(denuncia.getDescripcion(),style: TextStyle(color:Colors.black,fontSize: 20))),
               Padding(padding:EdgeInsets.only(top: 20.0)),
-            Padding(padding:EdgeInsets.symmetric(horizontal: 10.0),child: Text(denuncia.getDescripcion(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
-            Padding(padding:EdgeInsets.only(top: 20.0)),
-         
-    returnLink(denuncia.getLink()),
-     new WillPopScope(
-                onWillPop: () async => false,
-                 child: Container()
-            ),              
-          ],
+           
+      returnLink(denuncia.getLink()),
+       new WillPopScope(
+                  onWillPop: () async => false,
+                   child: Container()
+              ),              
+            ],
+          ),
         ),
-      ),
-    )     
-  );
+      )     
+  ),
+
+
+        ] 
+   );
   }
 
 

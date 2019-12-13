@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart' as prefix0;
+import 'package:funapp/src/appbar/navigation_bloc.dart';
 import 'package:funapp/src/models/usuario_model.dart';
 import 'package:funapp/src/pages/registro_denuncias.dart';
 import 'package:device_info/device_info.dart';
@@ -13,17 +15,20 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:funapp/src/style/theme.dart' as Theme;
 
+import 'home_page_admin.dart';
+
 
 
 class HomePage extends StatefulWidget {
 
 
 String value;
-HomePage({Key key, @required this.value}) : super (key : key);
+String nick;
+HomePage({Key key, @required this.value, @required this.nick}) : super (key : key);
   
   @override
   _HomePageState createState() => _HomePageState();
-
+  
 }
 
 
@@ -35,11 +40,9 @@ class _HomePageState extends State<HomePage> {
   String ip;
 
   TextoRegistro txt = new TextoRegistro();
-
- 
   
   Usuario usuario = Usuario();
- 
+RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)));
 
   
 
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> {
      final denunciasProvider = new DenunciasProvider();
      final denuncia = new Denuncia();
      List<Denuncia> ls = new List();
-
+    
   @override
   Widget build(BuildContext context) {
 
@@ -57,46 +60,74 @@ class _HomePageState extends State<HomePage> {
     
     return Scaffold(
        appBar: AppBar(
-         leading: new IconButton(
-               icon: new Icon(Icons.power_settings_new, color: Colors.black),
-               onPressed: () {
-
-                 cerrarSesion();
-               },
-              ), 
-        centerTitle: true,
-        title : Text('Funapp',textAlign: TextAlign.center,),
-        backgroundColor: Colors.indigoAccent,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon (Icons.search),
-            onPressed: (){
-                  showSearch(context: context, delegate: DataSearch());
-            },
-          )
-        ],
+         backgroundColor: Colors.purple[200],
+         shape: roundedRectangleBorder,
+      
+         title: Text('Pagina Principal',style: TextStyle(fontFamily: "WorkSans-Thin"),textAlign:TextAlign.center,),
       ),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+                accountName: Text("Admin"),
+                currentAccountPicture:Container(  
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image:
+                        AssetImage("lib/src/assets/bg9.jpeg"))
+                        )),
+                accountEmail: Text(widget.nick),
+                decoration: BoxDecoration(
+                  color: Colors.purple[200],)
+                  ),               
+            ListTile(
+              title: Text("Home"),
+              onTap: () {
+                Navigator.of(context).pop();
+                bloc.updateNavigation("Home");
+              },
+            ),
+            ListTile(
+              title: Text("Envia tu funa"),
+              onTap: () {
+                Navigator.of(context).pop();
+              //  bloc.updateNavigation("PageOne");
+                _alertaPrimera();
+              },
+            ),
+            ListTile(
+              title: Text("Buscar Funad@"),
+              onTap: () {
+                Navigator.of(context).pop();
+                //bloc.updateNavigation("PageTwo");
+                showSearch(context: context, delegate: DataSearch());
+              },
+            ),
+             ListTile(
+              title: Text("Cerrar Sesión"),
+              onTap: () {
+                Navigator.of(context).pop();
+                cerrarSesion();
+              },
+            ),
+          ],
+        ),
+      ),
+
        body: SingleChildScrollView(      
            child: Container(
                decoration: new BoxDecoration(
                  image: DecorationImage(
-            image: AssetImage('lib/src/assets/image_04.png'),
+            image: AssetImage('lib/src/assets/image_05.png'),
             fit: BoxFit.cover,
           ),
                 ),
              child: Column(
 
-               children: <Widget>[
+               children: <Widget>[                       
                  _swiperTarjetas(),
-   
-                 RaisedButton(
-                   child: Text("Enviar funa"),
-                   onPressed :(){
-                     _alertaPrimera();                  
-                     //Navigator.pushNamed(context, 'registroFunas'); 
-                     }               
-                 ) ,
-                  
                    WillPopScope(
                   onWillPop: () async => false,
                       child: Container(),
@@ -289,7 +320,22 @@ Future<bool> _onBackPressed() {
   }
 
 
+Color getColor(){
 
 
-  
+  return Colors.black;
 }
+
+
+getNick(String mail) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/Home.php"
+   ,body:{
+     "mail" : mail,
+   });
+    var datauser =json.decode(response.body);
+        return datauser;      
+    
+ }
+
+  }

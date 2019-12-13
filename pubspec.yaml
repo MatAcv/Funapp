@@ -62,10 +62,22 @@ flutter:
     - lib/src/assets/bg8.jpeg
     - lib/src/assets/bg9.jpeg
     - lib/src/assets/bg10.jpeg
+    - lib/src/assets/bg11.jpeg
+    - lib/src/assets/bg12.jpeg
+    - lib/src/assets/bg13.jpeg
+    - lib/src/assets/bg14.jpeg
+    - lib/src/assets/bg15.jpeg
+    - lib/src/assets/bg16.jpeg
+    - lib/src/assets/bg17.jpeg
+    - lib/src/assets/bg18.jpeg
+    - lib/src/assets/bg19.jpeg
+    - lib/src/assets/bg20.jpeg
+    - lib/src/assets/bg21.jpeg
     - lib/src/assets/image_01.png
     - lib/src/assets/image_02.png
     - lib/src/assets/image_03.png
     - lib/src/assets/image_04.png
+    - lib/src/assets/image_05.png
     - lib/src/assets/logo.png
     - lib/src/assets/logo2.png
     

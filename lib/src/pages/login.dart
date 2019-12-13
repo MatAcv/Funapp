@@ -76,15 +76,10 @@ class _LoginPageState extends State<LoginPage>
                     ? MediaQuery.of(context).size.height
                     : 775.0,
                 decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [
-                        Theme.Colors.loginGradientStart,
-                        Theme.Colors.loginGradientEnd
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                  image: DecorationImage(
+            image: AssetImage('lib/src/assets/image_05.png'),
+            fit: BoxFit.cover,
+          ),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -95,7 +90,7 @@ class _LoginPageState extends State<LoginPage>
                           width: 150.0,
                           height: 121.0,
                           fit: BoxFit.fill,
-                          image: new AssetImage('lib/src/assets/logo2.png')),
+                          image: new AssetImage('lib/src/assets/logo2.png')),//logo
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
@@ -378,7 +373,7 @@ class _LoginPageState extends State<LoginPage>
                   "Olvidaste tu contraseña?",
                   style: TextStyle(
                       decoration: TextDecoration.underline,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 16.0,
                       fontFamily: "WorkSansMedium"),
                 )),
@@ -393,7 +388,7 @@ class _LoginPageState extends State<LoginPage>
                     gradient: new LinearGradient(
                         colors: [
                           Colors.white10,
-                          Colors.white,
+                          Colors.black,
                         ],
                         begin: const FractionalOffset(0.0, 0.0),
                         end: const FractionalOffset(1.0, 1.0),
@@ -408,7 +403,7 @@ class _LoginPageState extends State<LoginPage>
                   child: Text(
                     "O",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16.0,
                         fontFamily: "WorkSansMedium"),
                   ),
@@ -417,7 +412,7 @@ class _LoginPageState extends State<LoginPage>
                   decoration: BoxDecoration(
                     gradient: new LinearGradient(
                         colors: [
-                          Colors.white,
+                          Colors.black,
                           Colors.white10,
                         ],
                         begin: const FractionalOffset(0.0, 0.0),
@@ -1137,9 +1132,6 @@ _alertaPassC(){
      "password" : password,
    });
 
- 
-
-
     var datauser =json.decode(response.body);
 
     if(datauser.length == 0){
@@ -1162,11 +1154,17 @@ _alertaPassC(){
 
       primVez= denunci;
 
+      final responseH = await http.post("http://yenya.000webhostapp.com/getNickHome.php"
+   ,body:{
+     "mail" : mail,
+   });
+    var datauserNick =json.decode(responseH.body);
+     String nik = Us.parseJson5(datauserNick);  
+
        if(registrado==true)
       {
 
   
-
            final decodedData = json.decode(response.body);
           final priv =  usuario.parseJson(decodedData);
           
@@ -1179,7 +1177,7 @@ _alertaPassC(){
           
           var route = new MaterialPageRoute(
             builder:  (BuildContext context){
-              return new HomePage(value:loginEmailController.text);
+              return new HomePage(value:loginEmailController.text, nick:nik);
             }
           );
 
@@ -1257,6 +1255,7 @@ _alertaPrimera(){
               child: new Text("Cerrar"),
               onPressed: () {
                 Navigator.of(context).pop();
+                
               },
             ),
             
@@ -1356,6 +1355,18 @@ upPrimVez(String mail) async{
    ,body:{
      "mail" : mail,
    });
+    
+ }
+
+
+ getNickH(String mail) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/Home.php"
+   ,body:{
+     "mail" : mail,
+   });
+    var datauser =json.decode(response.body);
+        return datauser;      
     
  }
 }

@@ -32,7 +32,7 @@ class _RegistroFunasState extends State<RegistroFunas> {
   Random rnd = new Random();
   int r ;
   String p;
-
+  bool existeEnv;
   String tituloS;
   String funadoS;
   String histS;
@@ -51,103 +51,119 @@ class _RegistroFunasState extends State<RegistroFunas> {
 
     getDevice();
 
- 
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Envía tu funa'),
+        backgroundColor: Colors.purple[200],
+        title: Text('Envía tu funa',style: TextStyle(fontFamily: "WorkSansBold"),),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(               
-                  maxLength: 50,
-                controller: tituloFuna,
-                decoration: InputDecoration(
-                    labelText: "Titulo *",          
-                      hintText: 'Titulo de la funa'
+      body: Container(
+         decoration: new BoxDecoration(
+                 image: DecorationImage(
+            image: AssetImage('lib/src/assets/image_05.png'),
+            fit: BoxFit.cover,
+          ),
                 ),
-              ),
-             
-              
-            ),
-             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(               
+                    maxLength: 50,
+                  controller: tituloFuna,
+                  decoration: InputDecoration(
+                      labelText: "Titulo *",          
+                        hintText: 'Titulo de la funa'
+                  ),
+                ),
+               
                 
-                maxLength: 50,
-                controller: nomFunado,
-                decoration: InputDecoration(
-                    labelText: "Nombre del Funado *",          
-                      hintText: 'Escribe el nombre completo del funado',
-                    
-
-                ),
-                onChanged: (valor){
-
-                },
               ),
-              
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: new TextField( 
-                maxLength: 6000,
-              decoration: const InputDecoration(
-              hintText: 'Copia y pega aqui toda la historia',
-              labelText: 'Funa **',
-                ),
-            autofocus: false,
-            maxLines: null,
-            controller: hist,
-            keyboardType: TextInputType.text,
-              ),
-            ),
+               Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  
+                  maxLength: 50,
+                  controller: nomFunado,
+                  decoration: InputDecoration(
+                      labelText: "Nombre del Funado *",          
+                        hintText: 'Escribe el nombre completo del funado',
+                      
 
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(       
-                 maxLength: 100,       
-                controller: link,
-                decoration: InputDecoration(
-                    labelText: "Link post red social",          
-                      hintText: 'Pega el link acá del post en Instagram o Facebook',
-                      counterText: 'Copia y pega el link con formato https://www.instagram.com/p/xxxx'
+                  ),
+                  onChanged: (valor){
+
+                  },
+                ),
+                
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: new TextField( 
+                  maxLength: 6000,
+                decoration: const InputDecoration(
+                hintText: 'Copia y pega aqui toda la historia',
+                labelText: 'Funa **',
+                  ),
+              autofocus: false,
+              maxLines: null,
+              controller: hist,
+              keyboardType: TextInputType.text,
                 ),
               ),
-              
-            ),
-          ],
-          
 
-
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(       
+                   maxLength: 100,       
+                  controller: link,
+                  decoration: InputDecoration(
+                      labelText: "Link post red social",          
+                        hintText: 'Pega el link acá del post en Instagram o Facebook',
+                        counterText: 'Copia y pega el link con formato https://www.instagram.com/p/xxxx'
+                        
+                  ),
+                ),
+                
+              ),
+               Container(
+                    height: 500.0,
+                  ),
+            ],        
+          ),
         ),
       ),
+      
       
       floatingActionButton: FloatingActionButton(
         // When the user presses the button, show an alert dialog containing
         // the text that the user has entered into the text field.
         onPressed: () {
-
-           correo= widget.value;
-         //  print(correo+'jeje');
-           
-           getUsername(widget.value);
+            
            getId(widget.value);
-       
+           getUsername(widget.value);
 
-          if(tituloFuna.text.trim() == '' || nomFunado.text.trim() =='' || hist.text.trim() =='')
+          existeDen(info);
+
+          if(tituloFuna.text.trim() =='' || nomFunado.text.trim() =='' || hist.text.trim() =='')
           {
-              completeCampos();
+          completeCampos();
           }else{
               enviarFuna();
           }
+          
+
+
+
+          
           
         },
         tooltip: 'Show me the value!',
         child: Icon(Icons.send),
       ),
+      
+      
     );
   }
 
@@ -209,7 +225,7 @@ setPoster(){
 
 
 int min = 0;
-int max = 11;
+int max = 22;
  r = min + rnd.nextInt(max - min);
 
 p =r.toString();
@@ -257,14 +273,21 @@ return showDialog(
             new FlatButton(
               child: new Text("Enviar"),
               onPressed: () {
-               
+
+                  if(existeEnv==false){
+
+                  
+               insertFecDen(info);
                 setPoster();
-                enviarRegistro(tituloFuna.text, hist.text, p ,link.text, nomFunado.text,idUser, nick);
+                enviarRegistro(tituloFuna.text, hist.text, p ,link.text, nomFunado.text,idUser, nick);               
                Navigator.of(context).pop();
               Navigator.of(context).pop();
- 
-
                 _alertaPrimera();
+
+                  }else{
+                    yaEnviaste();
+
+                  }
               },
             ),
             
@@ -333,5 +356,63 @@ return showDialog(
       idUser = denuncia;
     
  }
+
+
+
+ insertFecDen(String idUser) async{
+
+final response = await http.post("http://yenya.000webhostapp.com/insertFecFuna.php"
+   ,body:{
+     "idUser" : idUser,
+   });
+
+ }
+
+
+   existeDen(String idUser) async{
+
+   final response = await http.post("http://yenya.000webhostapp.com/existeFuna.php",body:{
+     "idUser" : idUser,
+   });
+
+    var datauser =json.decode(response.body);
+
+    if(datauser.length == 0){
+      print('no enviaste nada');
+      existeEnv = false;
+    }else{
+      print('ya enviaste');
+      existeEnv = true;
+    }
+ }
+
+  yaEnviaste(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text("No puedes volver a enviar otra funa, intentalo mas tarde" ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                 Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
+  }
 
 }
