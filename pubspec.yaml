@@ -26,6 +26,7 @@ dependencies:
   wifi: ^0.1.5
   flutter_recaptcha_v2: ^0.1.0
   
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,6 +39,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   font_awesome_flutter: ^8.0.1
+  flutter_launcher_icons: ^0.7.4 
+
+flutter_icons:
+  android: "launcher_icon" 
+  image_path: "lib/src/assets/icon/icon.png"
+  adaptive_icon_background: "lib/src/assets/icon/icon.png"
 
 
 # For information on the generic Dart part of this file, see the
@@ -80,6 +87,7 @@ flutter:
     - lib/src/assets/image_05.png
     - lib/src/assets/logo.png
     - lib/src/assets/logo2.png
+    - lib/src/assets/logo3.png
     
     
     
@@ -105,6 +113,10 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: lib/src/assets/CustomIcons.ttf
+    
+    - family: CustomIcons
+      fonts:
+        - asset: lib/src/assets/WorkSans-Thin.ttf
 
     - family: Poppins-Bold
       fonts:

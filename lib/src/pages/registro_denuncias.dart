@@ -55,7 +55,7 @@ class _RegistroFunasState extends State<RegistroFunas> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple[200],
-        title: Text('Envía tu funa',style: TextStyle(fontFamily: "WorkSansBold"),),
+        title: Text('Envía tu funa',style: TextStyle(fontFamily: "WorkSans-Thin"),),
       ),
       body: Container(
          decoration: new BoxDecoration(
@@ -140,6 +140,12 @@ class _RegistroFunasState extends State<RegistroFunas> {
         // When the user presses the button, show an alert dialog containing
         // the text that the user has entered into the text field.
         onPressed: () {
+
+          
+          if(isHttp(link.text)){
+            print('es https');
+
+          
             
            getId(widget.value);
            getUsername(widget.value);
@@ -152,7 +158,12 @@ class _RegistroFunasState extends State<RegistroFunas> {
           }else{
               enviarFuna();
           }
-          
+          }
+          else{
+            print('no es https');
+            _noesHttp();
+
+          }
 
 
 
@@ -204,7 +215,7 @@ class _RegistroFunasState extends State<RegistroFunas> {
  enviarRegistro(String titulo, String descripcion, String poster, String link, String id_f,String idUser, String nick ) async{
 
 
-   final resp= await http.post("http://yenya.000webhostapp.com/adddata_paso.php",body:{
+   final resp= await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/adddata_paso.php",body:{
      "titulo" : titulo,
      "descripcion" : descripcion,
      "poster" : poster,
@@ -309,7 +320,7 @@ return showDialog(
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Mensaje"),
-          content: new Text("Completa todos los campos con *" ),
+          content: new Text("Completa todos los campos" ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -330,7 +341,7 @@ return showDialog(
 
  getUsername(String mail) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/getUsername.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getUsername.php"
    ,body:{
      "mail" : mail,
    });
@@ -344,7 +355,7 @@ return showDialog(
  }
  getId(String mail) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/getId.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getId.php"
    ,body:{
      "mail" : mail,
    });
@@ -361,7 +372,7 @@ return showDialog(
 
  insertFecDen(String idUser) async{
 
-final response = await http.post("http://yenya.000webhostapp.com/insertFecFuna.php"
+final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/insertFecFuna.php"
    ,body:{
      "idUser" : idUser,
    });
@@ -371,7 +382,7 @@ final response = await http.post("http://yenya.000webhostapp.com/insertFecFuna.p
 
    existeDen(String idUser) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/existeFuna.php",body:{
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/existeFuna.php",body:{
      "idUser" : idUser,
    });
 
@@ -404,6 +415,45 @@ final response = await http.post("http://yenya.000webhostapp.com/insertFecFuna.p
               onPressed: () {
                 Navigator.of(context).pop();
                  Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
+  }
+
+
+  bool isHttp(String em){
+
+    String h  = '^(http|https)://';
+    RegExp regExp = new RegExp(h);
+
+  return regExp.hasMatch(em);
+
+  }
+
+
+    _noesHttp(){
+    
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text("Ingresa el link del post de forma correcta, te recomendamos usar la opcion 'Copiar enlace' en las opciones de tu post original"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
               },
             ),
             

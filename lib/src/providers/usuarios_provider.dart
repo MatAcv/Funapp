@@ -22,7 +22,7 @@ void disposeStream(){
 
 Future<List<Usuario>> getTitulo() async{
 
-  final resp = await http.get ('http://192.168.0.10:8080/test/getdatauser.php');
+  final resp = await http.get ('https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getdata.php');
   final decodedData = json.decode(resp.body);
 
  final denuncia = Us.parseJson2(decodedData);

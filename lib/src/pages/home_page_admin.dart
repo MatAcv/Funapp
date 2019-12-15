@@ -129,7 +129,7 @@ class _HomePageAdminState extends State<HomePageAdmin> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Importante, antes de que envies una funa:"),
-          content: new Text("•Asegurate de completar todos los campos con * \n\n•No coloques Rut o domicilios. \n\n•Por el momento no podrás subir fotos, por eso pedimos el link al post original en facebook o instagram. \n\n •Porfavor, asegurate de copiar y pegar la historia en el campo requerido" ),
+          content: new Text("•Asegurate de completar todos los campos con * \n\n•No coloques Rut o domicilios. \n\n•Por el momento no podrás subir fotos, por eso pedimos el link al post original en facebook o instagram. \n\n •Porfavor, asegurate de copiar y pegar la historia en el campo requerido.\n\n •Si vas a copiar y pegar tu historia y esta tiene signos de exclamación(!) reemplazalos y escribelos manualmente en tu teclado"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(

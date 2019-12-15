@@ -183,7 +183,7 @@ setState(() {
 
  Future insertaView(String id_user, String id_denuncia) async{
 
- final response = await http.post("http://yenya.000webhostapp.com/addviewUser.php"
+ final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/addviewUser.php"
    ,body:{
      "id_user" : id_user,
      "id_denuncia" : id_denuncia,
@@ -198,13 +198,13 @@ setState(() {
       print('no existe view');
 
 
-    await http.post("http://yenya.000webhostapp.com/addview.php",body:{
+    await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/addview.php",body:{
      "id" : id,
 
 
    });  //inserta view
    
-    await http.post("http://yenya.000webhostapp.com/insertViewUser.php",body:{
+    await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/insertViewUser.php",body:{
      "id_user" : id_user,
      "id_denuncia" : id_denuncia,
    });  
@@ -301,7 +301,7 @@ Future<bool> _onBackPressed() {
 
  getNick(String id) async{
 
-  final resp = await http.post('http://yenya.000webhostapp.com/getNickFinal.php', body: {
+  final resp = await http.post('https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getNickFinal.php', body: {
        "id" : id,
 
   });
@@ -407,7 +407,7 @@ eliminarRegistro(String id) async{
 
 
 
-    await http.post("http://yenya.000webhostapp.com/deleteRegProd.php",body:{
+    await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/deleteRegProd.php",body:{
      "id" : id,
 
 

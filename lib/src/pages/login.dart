@@ -30,6 +30,8 @@ class _LoginPageState extends State<LoginPage>
   final FocusNode myFocusNodePasswordLogin = FocusNode();
    final usuario = new Usuario();
 
+   bool pushed = false;
+
   final FocusNode myFocusNodePassword = FocusNode();
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
@@ -85,15 +87,15 @@ class _LoginPageState extends State<LoginPage>
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(top: 75.0),
+                      padding: EdgeInsets.only(top: 60.0),
                       child: new Image(
-                          width: 150.0,
-                          height: 121.0,
+                          width: 200.0,
+                          height: 200.0,
                           fit: BoxFit.fill,
-                          image: new AssetImage('lib/src/assets/logo2.png')),//logo
+                          image: new AssetImage('lib/src/assets/logo3.png')),//logo
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 20.0),
+                      padding: EdgeInsets.only(top: 0.0),
                       child: _buildMenuBar(context),
                     ),
                     Expanded(
@@ -356,7 +358,11 @@ class _LoginPageState extends State<LoginPage>
                     ),
                     onPressed: () {
 
-                      login(loginEmailController.text.trim(),loginPasswordController.text);
+                    
+                          login(loginEmailController.text.trim(),loginPasswordController.text);
+                  
+
+                      
                     }
                         
                         ),
@@ -465,6 +471,20 @@ class _LoginPageState extends State<LoginPage>
               ),
             ],
           ),
+          Row(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.help_outline),
+                    onPressed: (){
+                      _soporte();
+                    },),
+                    Text('Ayuda')
+                ],
+              )
+            ],
+          )
         ],
       ),
     );
@@ -794,13 +814,13 @@ setState(() {
 
 getUser(String id) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/existeuser.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/existeuser.php"
    ,body:{
      "username" : id,
    });
 
     var datauser =json.decode(response.body);
-
+    
     if(datauser.length == 0){
       print('Usuario no registrado');
       registrado = false;
@@ -925,7 +945,7 @@ _alertaPass(){
 
 enviarUser(String username,String password, String id_user, String mail) async{
 
-    await http.post("http://yenya.000webhostapp.com/registrarUsuario.php",body:{
+    await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/registrarUsuario.php",body:{
      "username" : username,
      "password" : password,
      "id_user" : id_user,
@@ -973,7 +993,7 @@ _limpiar(){
 
  getMail(String mail) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/existeEmail.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/existeEmail.php"
    ,body:{
      "mail" : mail,
    });
@@ -994,7 +1014,7 @@ _limpiar(){
 
 getNick(String nick) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/getNickReg.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getNickReg.php"
    ,body:{
      "username" : nick,
    });
@@ -1126,7 +1146,16 @@ _alertaPassC(){
 
  login(String mail,String password) async{
 
-   final response = await http.post( "http://yenya.000webhostapp.com/sesion.php"  /* "http://192.168.0.10:8080/test/sesion.php" */
+   if(pushed == false)
+   {
+
+   pushed = true;
+
+
+
+ 
+
+   final response = await http.post( "https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/sesion.php"  /* "http://192.168.0.10:8080/test/sesion.php" */
    ,body:{
      "mail" : mail,
      "password" : password,
@@ -1137,13 +1166,15 @@ _alertaPassC(){
     if(datauser.length == 0){
       print('Usuario no registrado');
       registrado = false;
+        pushed = false;
       _errorLogin();
+      
 
     }else{
        print('Usuario Existe');
        registrado = true;
 
-          final res = await http.post("http://yenya.000webhostapp.com/getPrimVez.php"
+          final res = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getPrimVez.php"
    ,body:{
      "mail" : mail,
    });
@@ -1154,7 +1185,7 @@ _alertaPassC(){
 
       primVez= denunci;
 
-      final responseH = await http.post("http://yenya.000webhostapp.com/getNickHome.php"
+      final responseH = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getNickHome.php"
    ,body:{
      "mail" : mail,
    });
@@ -1170,7 +1201,7 @@ _alertaPassC(){
           
 
         if(priv == '1'){
-/* 
+/*          
           Navigator.of(context).pop();
         Navigator.pushNamed(context, 'homePage');
         _alertaPrimera();   */ 
@@ -1182,6 +1213,7 @@ _alertaPassC(){
           );
 
           Navigator.of(context).push(route);
+          pushed = false;
 
           if(primVez=='1'){
 
@@ -1205,9 +1237,13 @@ _alertaPassC(){
            
           }
     }
+
+
+
+
  }
 
-
+ }
 
   _errorLogin(){
     
@@ -1278,7 +1314,7 @@ _alertaPrim(){
         return AlertDialog(
           title: new Text("Mensaje"),
           content: new SingleChildScrollView(
-            child: Text("Bienvenid@ a Funapp!\n\n•Funapp es una aplicación comunitaria la cual reune todas las funas en un solo lugar y cada uno puede aportar con sus historias.\n\n•Si vas a enviar una Funa, asegurate de ser lo mas detallad@ posible.\n\n•Si quieres saber si una persona esta funad@, puedes buscarl@ por su nombre apretando el icono de lupa en la esquina superior derecha y te apareceran las funas asociadas a esa persona. \n\n•Funapp por el momento no maneja imagenes, por lo tanto si vas a enviar una funa asegurate de adjuntar el link de tu post original en instagram o facebook, este será publicado junto con la funa que envies.\n\n•Ocupa inteligentemente la aplicación y podremos ayudar a mucha gente!. \n\n     •The Funapp team. " ),
+            child: Text("Bienvenid@ a Funapp!\n\n•Funapp es una aplicación comunitaria la cual reune todas las funas en un solo lugar y cada uno puede aportar con sus historias.\n\n•Si vas a enviar una Funa, asegurate de ser lo mas detallad@ posible.\n\n•Si quieres buscar a un funado, abre el menú y selecciona la opcion Buscar Funad@, puedes buscar por nombre completo o incompleto. \n\n•Funapp por el momento no maneja imagenes, por lo tanto si vas a enviar una funa asegurate de adjuntar el link de tu post original en instagram o facebook, este será publicado junto con la funa que envies.\n\n•Ocupa inteligentemente la aplicación y podremos ayudar a mucha gente!. \n\n     •The Funapp team. " ),
           ),
                      
           actions: <Widget>[
@@ -1300,7 +1336,7 @@ _alertaPrim(){
   
 Future<List<Usuario>> getMail2(String mail) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/existeEmail.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/existeEmail.php"
    ,body:{
      "mail" : mail,
    });
@@ -1351,7 +1387,7 @@ _alertaNick(){
 
 upPrimVez(String mail) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/upPrimVez.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/upPrimVez.php"
    ,body:{
      "mail" : mail,
    });
@@ -1361,13 +1397,43 @@ upPrimVez(String mail) async{
 
  getNickH(String mail) async{
 
-   final response = await http.post("http://yenya.000webhostapp.com/Home.php"
+   final response = await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/Home.php"
    ,body:{
      "mail" : mail,
    });
     var datauser =json.decode(response.body);
         return datauser;      
     
+ }
+
+  _soporte(){
+
+ 
+      return 
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Soporte"),
+          content: new Text("Para cualquier duda, solicitud o consulta favor escribir a soporte@funapp.cl"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            
+          ],
+        );
+      },
+    );
+  
+
+
  }
 }
   

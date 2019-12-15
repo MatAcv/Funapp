@@ -19,9 +19,9 @@ void disposeStream(){
   _popularesStreamController?.close();
 }
 
-Future<List<Denuncia>> getTitulo() async{
+Future<List<Denuncia>>  getTitulo() async{
 
-  final resp = await http.get ('http://yenya.000webhostapp.com/getdataPaso.php');
+  final resp = await http.get ('https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getdataPaso.php');
   final decodedData = json.decode(resp.body);
 
  final denuncia = Den.parseJson(decodedData);
@@ -37,7 +37,7 @@ Future<List<Denuncia>> getTitulo() async{
 
 Future<List<Denuncia>> getProd() async{
 
-  final resp = await http.get ('http://yenya.000webhostapp.com/getdataProd.php');
+  final resp = await http.get ('https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getdataProd.php');
   final decodedData = json.decode(resp.body);
 
  final denuncia = Den.parseJson(decodedData);

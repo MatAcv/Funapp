@@ -11,6 +11,7 @@ import 'package:funapp/src/models/texto_registro.dart';
 import 'package:funapp/src/providers/denuncias_provider.dart';
 import 'package:funapp/src/search/search_delegate.dart';
 import 'package:funapp/src/widgets/card_swiper.dart';
+import 'package:funapp/src/widgets/denuncia_horizontal.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:funapp/src/style/theme.dart' as Theme;
@@ -57,6 +58,7 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
 
   
      final Denuncia denuncia = ModalRoute.of(context).settings.arguments; 
+     final _screenSize = MediaQuery.of(context).size;
     
     return Scaffold(
        appBar: AppBar(
@@ -69,28 +71,23 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
         child: Column(
           children: <Widget>[
             UserAccountsDrawerHeader(
-                accountName: Text("Admin"),
-                currentAccountPicture:Container(  
+                accountName: Text(widget.value),
+                currentAccountPicture:Container(
+                  width: 200.0, 
+                  height: 400.0,
             decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                shape: BoxShape.rectangle,
                 image: DecorationImage(
                     fit: BoxFit.fill,
                     image:
-                        AssetImage("lib/src/assets/bg9.jpeg"))
+                        AssetImage("lib/src/assets/logo3.png"))
                         )),
                 accountEmail: Text(widget.nick),
                 decoration: BoxDecoration(
                   color: Colors.purple[200],)
                   ),               
             ListTile(
-              title: Text("Home"),
-              onTap: () {
-                Navigator.of(context).pop();
-                bloc.updateNavigation("Home");
-              },
-            ),
-            ListTile(
-              title: Text("Envia tu funa"),
+              title: Text("Envia tu funa",style: TextStyle(fontFamily: 'Poppins-Bold')),
               onTap: () {
                 Navigator.of(context).pop();
               //  bloc.updateNavigation("PageOne");
@@ -98,7 +95,7 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
               },
             ),
             ListTile(
-              title: Text("Buscar Funad@"),
+              title: Text("Buscar Funad@",style: TextStyle(fontFamily: 'Poppins-Bold')),
               onTap: () {
                 Navigator.of(context).pop();
                 //bloc.updateNavigation("PageTwo");
@@ -106,7 +103,7 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
               },
             ),
              ListTile(
-              title: Text("Cerrar Sesión"),
+              title: Text("Cerrar Sesión",style: TextStyle(fontFamily: 'Poppins-Bold')),
               onTap: () {
                 Navigator.of(context).pop();
                 cerrarSesion();
@@ -118,6 +115,7 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
 
        body: SingleChildScrollView(      
            child: Container(
+             height: _screenSize.height,
                decoration: new BoxDecoration(
                  image: DecorationImage(
             image: AssetImage('lib/src/assets/image_05.png'),
@@ -126,15 +124,18 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
                 ),
              child: Column(
 
-               children: <Widget>[                       
+               children: <Widget>[  
+                 Padding(padding:EdgeInsets.only(top:10.0),), 
+                 Text('Post recientes'),              
                  _swiperTarjetas(),
+                 Padding(padding:EdgeInsets.only(top:20.0),), 
+                 _footer(context),
+                 Container(),
                    WillPopScope(
                   onWillPop: () async => false,
                       child: Container(),
                 ),
-                  Container(
-                    height: 500.0,
-                  )
+
                ],
              ),
            ),
@@ -203,7 +204,7 @@ RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(borderRad
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Importante, antes de que envies una funa:"),
-          content: new Text("•Asegurate de completar todos los campos con * \n\n•No coloques Rut o domicilios. \n\n•Por el momento no podrás subir fotos, por eso pedimos el link al post original en facebook o instagram. \n\n •Porfavor, asegurate de copiar y pegar la historia en el campo requerido" ),
+          content: new Text("•Asegurate de completar todos los campos. \n\n•No coloques Ninguna clase de emoji(El sistema no recibirá la funa si existe uno). \n\n•Por el momento no podrás subir fotos, por eso pedimos el link al post original en facebook o instagram. \n\n •Si vas a copiar y pegar tu historia y esta tiene signos de exclamación(!) reemplazalos y escribelos manualmente en tu teclado.\n\n•Eres responsable de tu funa" ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -327,15 +328,32 @@ Color getColor(){
 }
 
 
-getNick(String mail) async{
+Widget _footer(BuildContext context){
 
-   final response = await http.post("http://yenya.000webhostapp.com/Home.php"
-   ,body:{
-     "mail" : mail,
-   });
-    var datauser =json.decode(response.body);
-        return datauser;      
-    
- }
 
+return Container(
+
+  width: double.infinity,
+  child: Column(
+    children: <Widget>[
+      Text('Los mas leídos'),
+      Padding(padding:EdgeInsets.only(top:10.0),), 
+     FutureBuilder(
+       future: denunciasProvider.getLeidos(),
+       builder: (BuildContext context, AsyncSnapshot<List> snapshot){
+         if(snapshot.hasData)
+         {
+            return DenunciaHorizontal(denuncias: snapshot.data);
+         }else{
+
+         }
+         return CircularProgressIndicator();
+       }
+      )
+    ],
+  ),
+
+);
+
+}
   }

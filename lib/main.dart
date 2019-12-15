@@ -9,7 +9,7 @@ import 'package:funapp/src/pages/home_page_prod.dart';
 import 'package:funapp/src/pages/login.dart';
 import 'package:funapp/src/pages/recuperar_pass.dart';
 import 'package:funapp/src/pages/registro_denuncias.dart';
-import 'package:funapp/src/pages/registro_usuario.dart';
+
 
 
 
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
         'detalleDenuncia' : (BuildContext context) =>DetalleDenuncia(),
         'registroFunas': (BuildContext context) =>RegistroFunas(),
         '/' : (BuildContext context) => LoginPage(),
-        'registroUser' : (BuildContext context) => RegistroUsuario(),
          'denunciaDetalleDos' : (BuildContext context) => DenunciaDetalleDos(),
          'homePageAdmin' : (BuildContext context) => HomePageAdmin(),
          'denunciaDetalleAdmin' : (BuildContext context) => DenunciaDetalleAdmin(),

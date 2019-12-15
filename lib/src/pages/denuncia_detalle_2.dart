@@ -75,13 +75,13 @@ id = denuncia.getId();
           child: Column(
             children: <Widget>[
 
-              Text(denuncia.getTitulo(), style: TextStyle(fontSize: 40,color:Colors.black), ),
+              Text(denuncia.getTitulo(), style: TextStyle(fontFamily: "Poppins-Bold",fontSize: 40,color:Colors.black), ),
               Padding(padding:EdgeInsets.only(top: 10.0)),
                 Text('Por: '+denuncia.getNick() ,style: TextStyle(fontSize: 20,color:Colors.black),textAlign: TextAlign.start,),
                Padding(padding:EdgeInsets.only(top: 10.0)),
                Text('Funado: '+denuncia.getFunado() ,style: TextStyle(fontSize: 20,color:Colors.black),textAlign: TextAlign.start,),
                 Padding(padding:EdgeInsets.only(top: 20.0)),
-              Padding(padding:EdgeInsets.symmetric(horizontal: 10.0),child: Text(denuncia.getDescripcion(),style: TextStyle(color:Colors.black,fontSize: 20))),
+              Padding(padding:EdgeInsets.symmetric(horizontal: 10.0),child: Text(denuncia.getDescripcion(),style: TextStyle(fontFamily: "WorkSans-Thin",color:Colors.black,fontSize: 20))),
               Padding(padding:EdgeInsets.only(top: 20.0)),
            
       returnLink(denuncia.getLink()),
@@ -121,7 +121,7 @@ setState(() {
 
  Future insertaView(String id_user, String id_denuncia) async{
 
- final response = await http.post( "http://yenya.000webhostapp.com/addviewUser.php"  /* "http://192.168.0.10:8080/test/addviewUser.php" */
+ final response = await http.post( "https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/addviewUser.php"  /* "http://192.168.0.10:8080/test/addviewUser.php" */
    ,body:{
      "id_user" : id_user,
      "id_denuncia" : id_denuncia,
@@ -136,13 +136,13 @@ setState(() {
       print('no existe view');
 
 
-    await http.post( "http://yenya.000webhostapp.com/addview.php"  /* 'http://192.168.0.10:8080/test/addview.php' */,body:{
+    await http.post( "https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/addview.php"  /* 'http://192.168.0.10:8080/test/addview.php' */,body:{
      "id" : id,
 
 
    });  //inserta view
    
-    await http.post("http://yenya.000webhostapp.com/insertViewUser.php",body:{
+    await http.post("https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/insertViewUser.php",body:{
      "id_user" : id_user,
      "id_denuncia" : id_denuncia,
    });  
@@ -238,7 +238,7 @@ Future<bool> _onBackPressed() {
 
  getNick(String id) async{
 
-  final resp = await http.post( 'http://yenya.000webhostapp.com/getNickFinal.php'  /* 'http://192.168.0.10:8080/test/getNickFinal.php' */, body: {
+  final resp = await http.post( 'https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getNickFinal.php'  /* 'http://192.168.0.10:8080/test/getNickFinal.php' */, body: {
        "id" : id,
 
   });

@@ -21,7 +21,7 @@ void disposeStream(){
 
 Future<List<Denuncia>> getTitulo() async{
 
-  final resp = await http.get ( 'http://yenya.000webhostapp.com/getdata.php'  /* 'http://192.168.0.10:8080/test/getdata.php' */);
+  final resp = await http.get ('https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getdata.php'  /* 'http://192.168.0.10:8080/test/getdata.php' */);
   final decodedData = json.decode(resp.body);
 
  final denuncia = Den.parseJson(decodedData);
@@ -38,7 +38,7 @@ Future<List<Denuncia>> getTitulo() async{
 Future <List<Denuncia>> buscarDenuncia (String query) async{
 
   
-    final resp = await http.post( 'http://yenya.000webhostapp.com/getFunado.php'  /* 'http://192.168.0.10:8080/test/getFunado.php' */, body: {
+    final resp = await http.post( 'https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getFunado.php'  /* 'http://192.168.0.10:8080/test/getFunado.php' */, body: {
        "id_funado" : query,
 
   });
@@ -59,7 +59,7 @@ return denuncias;
 Future <List<Denuncia>> buscarPoster (String query) async{
 
   
-    final resp = await http.post( 'http://yenya.000webhostapp.com/getPoster.php'  /* 'http://192.168.0.10:8080/test/getFunado.php' */, body: {
+    final resp = await http.post( 'https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getPoster.php'  /* 'http://192.168.0.10:8080/test/getFunado.php' */, body: {
        "id" : query,
 
   });
@@ -77,6 +77,20 @@ return denuncias;
 
 
 
+Future<List<Denuncia>> getLeidos() async{
+
+  final resp = await http.get ('https://funapp.cl/2y12R9v6Gka0XnCPCEzfv.6OY7Kc8gLY1Uokq62bXhbhaVbJoyxhyH6/getLeidos.php'  /* 'http://192.168.0.10:8080/test/getdata.php' */);
+  final decodedData = json.decode(resp.body);
+
+ final denuncia = Den.parseJson(decodedData);
+ //final denuncia = new Den.fromJsonList(decodedData);
+
+ // print (denuncia.item[0].titulo);
+  return denuncia;
+  //return denuncia.item;
+
+
+}
 
 
 
