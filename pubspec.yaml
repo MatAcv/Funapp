@@ -19,16 +19,32 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  device_info: ^0.4.1+3
+  url_launcher: ^5.2.7
+  unique_identifier: ^0.0.3
+  get_ip: ^0.3.0
+  wifi: ^0.1.5
+  flutter_recaptcha_v2: ^0.1.0
+  
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   flutter_swiper: ^1.1.6
   http: any
+  flutter_screenutil: ^0.4.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  font_awesome_flutter: ^8.0.1
+  flutter_launcher_icons: ^0.7.4 
+
+flutter_icons:
+  android: "launcher_icon" 
+  image_path: "lib/src/assets/icon/icon.png"
+  adaptive_icon_background: "lib/src/assets/icon/icon.png"
 
 
 # For information on the generic Dart part of this file, see the
@@ -43,6 +59,37 @@ flutter:
   uses-material-design: true
   assets:
     - lib/src/assets/bg0.jpeg
+    - lib/src/assets/bg1.jpeg
+    - lib/src/assets/bg2.jpeg
+    - lib/src/assets/bg3.jpeg
+    - lib/src/assets/bg4.jpeg
+    - lib/src/assets/bg5.jpeg
+    - lib/src/assets/bg6.jpeg
+    - lib/src/assets/bg7.jpeg
+    - lib/src/assets/bg8.jpeg
+    - lib/src/assets/bg9.jpeg
+    - lib/src/assets/bg10.jpeg
+    - lib/src/assets/bg11.jpeg
+    - lib/src/assets/bg12.jpeg
+    - lib/src/assets/bg13.jpeg
+    - lib/src/assets/bg14.jpeg
+    - lib/src/assets/bg15.jpeg
+    - lib/src/assets/bg16.jpeg
+    - lib/src/assets/bg17.jpeg
+    - lib/src/assets/bg18.jpeg
+    - lib/src/assets/bg19.jpeg
+    - lib/src/assets/bg20.jpeg
+    - lib/src/assets/bg21.jpeg
+    - lib/src/assets/image_01.png
+    - lib/src/assets/image_02.png
+    - lib/src/assets/image_03.png
+    - lib/src/assets/image_04.png
+    - lib/src/assets/image_05.png
+    - lib/src/assets/logo.png
+    - lib/src/assets/logo2.png
+    - lib/src/assets/logo3.png
+    
+    
     
 
 
@@ -62,8 +109,35 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+  fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: lib/src/assets/CustomIcons.ttf
+    
+    - family: CustomIcons
+      fonts:
+        - asset: lib/src/assets/WorkSans-Thin.ttf
+
+    - family: Poppins-Bold
+      fonts:
+        - asset: lib/src/assets/Poppins-Bold.ttf
+
+    - family: Poppins-Medium
+      fonts:
+        - asset: lib/src/assets/Poppins-Medium.ttf 
+  
+    - family: WorkSansSemiBold
+      fonts:
+        - asset: lib/src/assets/fonts/Work_Sans/WorkSans-SemiBold.ttf
+
+    - family: WorkSansBold
+      fonts:
+        - asset: lib/src/assets/fonts/Work_Sans/WorkSans-Bold.ttf
+
+    - family: WorkSansMedium
+      fonts:
+        - asset: lib/src/assets/fonts/Work_Sans/WorkSans-Medium.ttf
+
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf

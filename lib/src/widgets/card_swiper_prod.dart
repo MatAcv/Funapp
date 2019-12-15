@@ -7,15 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 
-class CardSwiper extends StatelessWidget {
-  
+class CardSwiperProd extends StatelessWidget {
 
        List<dynamic> denunciass = new List();
        final List<Denuncia> denuncias;
-       final String pp ='';
        String poster = '';
        
-  CardSwiper({this.denuncias});
+  CardSwiperProd({@required this.denuncias});
  
   @override
   Widget build(BuildContext context) {  
@@ -31,7 +29,7 @@ class CardSwiper extends StatelessWidget {
       child: Swiper(
           itemBuilder: (BuildContext context,int index){    
       return   GestureDetector(
-         onTap: ()=>Navigator.pushNamed(context, 'denunciaDetalleDos', arguments : denuncias[index]),
+         onTap: ()=>Navigator.pushNamed(context, 'denunciaDetalleProd', arguments : denuncias[index]),
               child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
                       child:  Stack(
@@ -43,9 +41,9 @@ class CardSwiper extends StatelessWidget {
                             fit : BoxFit.cover,
                           ),     
                           Container( 
-  
-                            padding: EdgeInsets.only(left: _screenSize.height *0.25, top: _screenSize.width * 0.015),
+                            padding: EdgeInsets.only(bottom: 350.0,left: 200.0),
                             child : Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                   Icon(Icons.visibility),
                                   Container(
@@ -58,11 +56,11 @@ class CardSwiper extends StatelessWidget {
                           Container( 
                             padding: EdgeInsets.only(left: 20.0,top: 40.0),   
                             margin: EdgeInsets.all(10.0),                    
-                            child: Text("${denuncias[index].titulo}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold ),),),
+                            child: Text("${denuncias[index].titulo}",style: TextStyle(fontSize: 30 ),),),
                             Container(
                               margin: EdgeInsets.only(right: 10),
                               padding: EdgeInsets.only(left: 20.0,top: 200.0),    
-                              child: Text("${denuncias[index].descripcion}",style: TextStyle(fontWeight: FontWeight.bold),overflow: TextOverflow.visible,),
+                              child: Text("${denuncias[index].descripcion}",overflow: TextOverflow.visible,),
                             ),
                             
                             
@@ -83,6 +81,20 @@ class CardSwiper extends StatelessWidget {
     );
   }
 
+
+Future <List> getData() async{
+
+   final response = await http.get("http://192.168.0.10:8080/test/getdataProd.php");
+
+    var datauser =json.decode(response.body);
+
+    if(datauser.length == 0){
+      print('incorrecto');
+    }else{
+        denunciass.add(datauser);
+       print('123213');
+    }
+ }
 
 
 
