@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:funapp/src/pages/denuncia_detalle.dart';
+
 import 'package:funapp/src/pages/denuncia_detalle_2.dart';
 import 'package:funapp/src/pages/denuncia_detalle_admin.dart';
 import 'package:funapp/src/pages/denuncia_detalle_prod.dart';
@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
       initialRoute : '/',
       routes: {
         'homePage' : (BuildContext context) => HomePage(),
-        'detalleDenuncia' : (BuildContext context) =>DetalleDenuncia(),
         'registroFunas': (BuildContext context) =>RegistroFunas(),
         '/' : (BuildContext context) => LoginPage(),
          'denunciaDetalleDos' : (BuildContext context) => DenunciaDetalleDos(),

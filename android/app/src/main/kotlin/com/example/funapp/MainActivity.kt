@@ -1,4 +1,4 @@
-package com.example.funapp
+package cl.funapp.funappteam
 
 import android.os.Bundle
 
